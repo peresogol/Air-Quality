@@ -6,5 +6,5 @@ import retrofit2.http.GET;
 
 public interface AirVisualAPI {
     @GET("posts")
-    Call<List> getPosts();
+    Call<List> getPost();
 }
