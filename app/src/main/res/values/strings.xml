@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Qualit\'Air</string>
+    <string name="villeGeolocalisation" translatable="false">Exemple : Toulouse</string>
+    <string name="boutonGeolocalisation">Géolocalisez-moi !</string>
+    <string name="TitreMainActivity">La qualité de l&#39;air où que vous soyez</string>
+    <string name="buttonRechercher">Rechercher !</string>
+    <string name="radioButton_Pollution">Pollution</string>
+    <string name="VilleLocalisation">Ville la plus proche :</string>
+    <string name="radioButton_MeteoAndPollution">Météo et pollution</string>
+    <string name="textView_Information">Choisissez les informations à afficher :</string>
+    <string name="radioButton_Meteo">Météo</string>
 </resources>
