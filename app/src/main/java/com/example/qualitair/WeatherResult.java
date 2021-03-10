@@ -7,7 +7,7 @@ public class WeatherResult {
     private String icon;
     private int temperature;
     private int pressure;
-    private int humidty;
+    private int humidity;
     private int windSpeed;
     private int windDirection;
 
@@ -32,8 +32,8 @@ public class WeatherResult {
         return this.pressure;
     }
 
-    public int getHumidty() {
-        return this.humidty;
+    public int getHumidity() {
+        return this.humidity;
     }
 
     public int getWindSpeed() {
@@ -64,8 +64,8 @@ public class WeatherResult {
         this.pressure = pressure;
     }
 
-    public void setHumidty(int humidty) {
-        this.humidty = humidty;
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
     }
 
     public void setWindSpeed(int windSpeed) {
