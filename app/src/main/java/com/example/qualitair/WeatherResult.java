@@ -11,7 +11,6 @@ public class WeatherResult {
     private int windSpeed;
     private int windDirection;
 
-
     public String getHour() {
         return this.hour;
     }
