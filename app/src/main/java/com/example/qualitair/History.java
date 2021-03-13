@@ -1,4 +1,6 @@
 package com.example.qualitair;
 
-public class History {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class History extends AppCompatActivity {
 }

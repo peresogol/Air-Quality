@@ -1,4 +1,6 @@
 package com.example.qualitair;
 
-public class FavouriteCities {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class FavouriteCities extends AppCompatActivity {
 }
