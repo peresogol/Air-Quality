@@ -21,7 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
-public class DisplayResult extends AppCompatActivity {
+public class CallAPI extends AppCompatActivity {
 
     private static final String key = "fb2d9bd0-77c5-458e-b830-fac56be1ec93";
     private static String longitude = "48.852346";
@@ -38,17 +38,18 @@ public class DisplayResult extends AppCompatActivity {
     AirVisualAPI serviceAPI;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_result);
+        setContentView(R.layout.activity_call_api);
 
         // récupération du textView
         this.textViewJSON = (TextView) findViewById(R.id.idTextView);
 
         // Construction d'une instance de retrofit (Etape #2 du cours)
         this.retrofit = new Retrofit.Builder()
-                .baseUrl(DisplayResult.API_BASE_URL)
+                .baseUrl(CallAPI.API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -93,7 +94,7 @@ public class DisplayResult extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<JsonElement> call, Throwable t) {
-                        Toast.makeText(DisplayResult.this, "Erreur lors de l'appel à l'API :" + t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }
