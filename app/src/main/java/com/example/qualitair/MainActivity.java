@@ -17,8 +17,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.UUID;
+
+import static com.example.qualitair.R.string.warning_no_radio_selection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,15 +44,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button displayResult = (Button) findViewById(R.id.buttonRechercher);
-
         displayResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DisplayResult.class);
                 RadioGroup radioGroup_Choices = (RadioGroup) findViewById(R.id.radioGroup);
-                RadioButton radioButton_Choices = (RadioButton) findViewById(radioGroup_Choices.getCheckedRadioButtonId());
-                intent.putExtra("choice", radioButton_Choices.toString());
-                startActivity(intent);
+                int radioButton_id = radioGroup_Choices.getCheckedRadioButtonId();
+                if (radioButton_id != -1) {
+                    RadioButton radioButton_Choices = (RadioButton) findViewById(radioButton_id);
+                    Intent intent = new Intent(MainActivity.this, DisplayResult.class);
+                    intent.putExtra("choice", radioButton_Choices.getText());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, warning_no_radio_selection, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -58,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
                 pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
                 locationResult = (LocationResult) data.getExtras().getSerializable("location");
