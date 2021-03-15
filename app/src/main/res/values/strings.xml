@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Qualit\'Air</string>
-    <string name="villeGeolocalisation" translatable="false">Exemple : Toulouse</string>
+    <string name="villeGeolocalisation">Exemple : Toulouse</string>
     <string name="boutonGeolocalisation">Géolocalisez-moi !</string>
     <string name="TitreMainActivity">"La qualité de l'air où que vous soyez"</string>
     <string name="buttonRechercher">Rechercher !</string>
@@ -15,4 +15,6 @@
     <string name="coordonnees_GPS">Coordonées GPS</string>
     <string name="menu_title_history">Historique</string>
     <string name="menu_title_favourite">Vos favoris</string>
+    <string name="setFavourite">Ajouter aux favoris</string>
+    <string name="warning_no_radio_selection">Veuillez selectionner les informations à afficher</string>
 </resources>
