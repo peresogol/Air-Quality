@@ -39,8 +39,8 @@ import retrofit2.http.GET;
 public class CallAPI extends AppCompatActivity {
 
     private static final String key = "fb2d9bd0-77c5-458e-b830-fac56be1ec93";
-    private String longitude = "48.852346";
-    private String latitude = "2.328508";
+    private String longitude;
+    private String latitude;
   //  private static final String BASE_URL = "http://api.airvisual.com/v2/nearest_city?lat=" + lattitude + "&lon="+ longitude +"&key=fb2d9bd0-77c5-458e-b830-fac56be1ec93";
 
     private TextView textViewJSON; // TextView dans lequel on va insérer le JSON récupéré de l'API
