@@ -7,12 +7,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.strictmode.IntentReceiverLeakedViolation;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.UUID;
 
@@ -26,12 +30,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Button geoLoc = (Button) findViewById(R.id.boutonGeolocalisation);
         geoLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentCallAPI = new Intent(MainActivity.this, CallAPI.class);
                 startActivityForResult(intentCallAPI, 2);
+            }
+        });
+
+        Button displayResult = (Button) findViewById(R.id.buttonRechercher);
+
+        displayResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DisplayResult.class);
+                RadioGroup radioGroup_Choices = (RadioGroup) findViewById(R.id.radioGroup);
+                RadioButton radioButton_Choices = (RadioButton) findViewById(radioGroup_Choices.getCheckedRadioButtonId());
+                intent.putExtra("choice", radioButton_Choices.toString());
+                startActivity(intent);
             }
         });
     }
