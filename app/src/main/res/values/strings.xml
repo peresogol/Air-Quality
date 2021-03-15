@@ -11,4 +11,8 @@
     <string name="radioButton_Meteo">Météo</string>
     <string name="TextDeBase">Ici va être inséré le JSON</string>
     <string name="appelAPI">Appel API</string>
+    <string name="nom_lieu">Nom du lieu</string>
+    <string name="coordonnees_GPS">Coordonées GPS</string>
+    <string name="menu_title_history">Historique</string>
+    <string name="menu_title_favourite">Vos favoris</string>
 </resources>
