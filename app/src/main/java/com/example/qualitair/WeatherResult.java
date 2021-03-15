@@ -87,4 +87,18 @@ public class WeatherResult implements Serializable {
     public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
     }
+
+    @Override
+    public String toString() {
+        return "WeatherResult{" +
+                "hour='" + hour + '\'' +
+                ", date='" + date + '\'' +
+                ", icon='" + icon + '\'' +
+                ", temperature='" + temperature + '\'' +
+                ", pressure='" + pressure + '\'' +
+                ", humidity='" + humidity + '\'' +
+                ", windSpeed='" + windSpeed + '\'' +
+                ", windDirection='" + windDirection + '\'' +
+                '}';
+    }
 }

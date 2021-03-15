@@ -47,4 +47,14 @@ public class PollutionResult implements Serializable {
     public void setAirQualityIndexUS(String airQualityIndexUS) {
         AirQualityIndexUS = airQualityIndexUS;
     }
+
+    @Override
+    public String toString() {
+        return "PollutionResult{" +
+                "date='" + date + '\'' +
+                ", hour='" + hour + '\'' +
+                ", mainPollutant='" + mainPollutant + '\'' +
+                ", AirQualityIndexUS='" + AirQualityIndexUS + '\'' +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package com.example.qualitair;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -133,7 +134,7 @@ public class CallAPI extends AppCompatActivity {
                     intentRetour.putExtra("location", locationResult);
                     intentRetour.putExtra("weather", weatherResult);
                     intentRetour.putExtra("pollution", pollutionResult);
-                    setResult(1, intentRetour);
+                    setResult(Activity.RESULT_OK, intentRetour);
                     finish();
 
                     // Affiche la chaine sur l'interface

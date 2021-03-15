@@ -3,9 +3,11 @@ package com.example.qualitair;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.strictmode.IntentReceiverLeakedViolation;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentCallAPI = new Intent(MainActivity.this, CallAPI.class);
-                startActivityForResult(intentCallAPI, 1);
-
+                startActivityForResult(intentCallAPI, 2);
             }
         });
     }
@@ -38,10 +39,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_OK) {
-             weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
-             pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
-             locationResult = (LocationResult) data.getExtras().getSerializable("location");
+        if (requestCode == 2) {
+            if(resultCode == Activity.RESULT_OK){
+                weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
+                pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
+                locationResult = (LocationResult) data.getExtras().getSerializable("location");
+                Log.v("raoue", weatherResult.toString());
+                Log.v("raoue", pollutionResult.toString());
+                Log.v("raoue", locationResult.toString());
+            }
         }
     }
 

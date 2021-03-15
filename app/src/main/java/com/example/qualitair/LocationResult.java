@@ -20,6 +20,17 @@ public class LocationResult implements Serializable {
         this.latitude = lat;
     }
 
+    @Override
+    public String toString() {
+        return "LocationResult{" +
+                "city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                '}';
+    }
+
     public void setCity(String city) {
         this.city = city;
     }
