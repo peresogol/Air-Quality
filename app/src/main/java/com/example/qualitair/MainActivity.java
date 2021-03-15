@@ -9,15 +9,40 @@ import android.os.strictmode.IntentReceiverLeakedViolation;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
+    WeatherResult weatherResult;
+    PollutionResult pollutionResult;
+    LocationResult locationResult;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button geoLoc = (Button) findViewById(R.id.boutonGeolocalisation);
+        geoLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCallAPI = new Intent(MainActivity.this, CallAPI.class);
+                startActivityForResult(intentCallAPI, 1);
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_OK) {
+             weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
+             pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
+             locationResult = (LocationResult) data.getExtras().getSerializable("location");
+        }
     }
 
     @Override

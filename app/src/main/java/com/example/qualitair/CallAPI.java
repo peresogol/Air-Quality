@@ -2,6 +2,7 @@ package com.example.qualitair;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -25,6 +26,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +44,7 @@ public class CallAPI extends AppCompatActivity {
     private static final String key = "fb2d9bd0-77c5-458e-b830-fac56be1ec93";
     private String longitude;
     private String latitude;
-  //  private static final String BASE_URL = "http://api.airvisual.com/v2/nearest_city?lat=" + lattitude + "&lon="+ longitude +"&key=fb2d9bd0-77c5-458e-b830-fac56be1ec93";
+    //  private static final String BASE_URL = "http://api.airvisual.com/v2/nearest_city?lat=" + lattitude + "&lon="+ longitude +"&key=fb2d9bd0-77c5-458e-b830-fac56be1ec93";
 
     private TextView textViewJSON; // TextView dans lequel on va insérer le JSON récupéré de l'API
 
@@ -83,50 +86,100 @@ public class CallAPI extends AppCompatActivity {
         this.serviceAPI = retrofit.create(AirVisualAPI.class);
 
         // Construit le traitement lorsque l'on clique sur le bouton appel
-        Button boutonFiche = (Button) findViewById(R.id.idButtonFiche);
+       /* Button boutonFiche = (Button) findViewById(R.id.idButtonFiche);
         boutonFiche.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {*/
                 // appel méthode getResult de l'interface AirVisualAPI
-                Call<JsonElement> appel = serviceAPI.getResult(CallAPI.this.latitude, CallAPI.this.longitude, "fb2d9bd0-77c5-458e-b830-fac56be1ec93");
-                appel.enqueue(new Callback<JsonElement>() {
-                    @Override
-                    public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
-                        if (response.isSuccessful()) {
-                            // Récupère le contenu JSON de la réponse
-                            JsonElement contenu = response.body();
-                            textViewJSON.setText(contenu.toString());
+        Call<JsonElement> appel = serviceAPI.getResult(CallAPI.this.latitude, CallAPI.this.longitude, "fb2d9bd0-77c5-458e-b830-fac56be1ec93");
+        appel.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                if (response.isSuccessful()) {
+                    // Recupere le contenu JSON de la réponse
+                    JsonElement contenu = response.body();
+                    textViewJSON.setText(contenu.toString());
 
-                            /*   // Convertir en JsonObject pour pouvoir accéder aux attributs
-                            JsonObject jsonGlobal = contenu.getAsJsonObject();
+                    // Convertir en JsonObject pour pouvoir accéder aux attributs
+                    JsonObject jsonGlobal = contenu.getAsJsonObject();
+                    JsonObject data = jsonGlobal.getAsJsonObject("data");
 
-                            // Récupère les aptitudes du Pokemon
-                            JsonArray abilities = jsonGlobal.getAsJsonArray("abilities");
+                    // Recupere les infos de localisation
+                    JsonObject location = data.getAsJsonObject("location");
+                    JsonArray coordinates = location.getAsJsonArray("coordinates");
 
-                            StringBuffer chaineConstruite = new StringBuffer("Aptitudes : \n");
+                   // Create location class
+                    LocationResult locationResult = new LocationResult(
+                            data.get("city").toString(),
+                            data.get("state").toString(),
+                            data.get("country").toString(),
+                            coordinates.get(0).toString(),
+                            coordinates.get(1).toString()
+                    );
 
-                            for (JsonElement element : abilities){
-                                // récupère le nom de l'abilité
-                                JsonObject obj = element.getAsJsonObject();
+                    // Donnees des sondes (meteo et pollution)
+                    JsonObject current = data.getAsJsonObject("current");
 
-                                // Extraction "rapide"
-                                chaineConstruite.append(obj.get("ability").getAsJsonObject().get("name").getAsString()+"\n");
-                            }
+                    // Recupere les infos meteo
+                    JsonObject weather = current.getAsJsonObject("weather");
+                    WeatherResult weatherResult = getWeatherResult(weather);
 
-                            // Affiche la chaine sur l'interface
-                            textViewJSON.setText(chaineConstruite.toString());
-                        } else {
-                            Toast.makeText(DisplayResult.this, "Erreur lors de l'appel à l'API :" + response.errorBody(), Toast.LENGTH_SHORT).show();
-                        */}
-                    }
+                    // Recupere les infos pollution
+                    JsonObject pollution = current.getAsJsonObject("pollution");
+                    PollutionResult pollutionResult = getPollutionResult(pollution);
 
-                    @Override
-                    public void onFailure(Call<JsonElement> call, Throwable t) {
-                        Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                    // Return objects
+                    Intent intentRetour = new Intent();
+                    intentRetour.putExtra("location", locationResult);
+                    intentRetour.putExtra("weather", weatherResult);
+                    intentRetour.putExtra("pollution", pollutionResult);
+                    setResult(1, intentRetour);
+                    finish();
+
+                    // Affiche la chaine sur l'interface
+                    textViewJSON.setText(contenu.toString());
+                } else {
+                    Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + response.errorBody(), Toast.LENGTH_SHORT).show();
+                }
             }
+
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+                Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+            //    });
+           // }
         });
+    }
+
+    private PollutionResult getPollutionResult(JsonObject pollution) {
+        String[] timestamp = pollution.get("ts").toString().split("T");
+        String date = timestamp[0];
+        String hour = timestamp[1].split(":")[0];
+        // Create pollution result class
+        return new PollutionResult (
+                hour,
+                date,
+                pollution.get("mainus").toString(),
+                pollution.get("aqius").toString()
+        );
+    }
+
+    private WeatherResult getWeatherResult(JsonObject weather) {
+        String[] timestamp = weather.get("ts").toString().split("T");
+        String date = timestamp[0];
+        String hour = timestamp[1].split(":")[0];
+        // Create meteo result class
+        return new WeatherResult(
+                hour,
+                date,
+                weather.get("ic").toString(),
+                weather.get("tp").toString(),
+                weather.get("pr").toString(),
+                weather.get("hu").toString(),
+                weather.get("ws").toString(),
+                weather.get("wd").toString()
+        );
     }
 
     @SuppressLint("MissingPermission")

@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+   <!-- <Button
         android:id="@+id/idButtonFiche"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:layout_weight="0.5"
         android:text="@string/appelAPI"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" />-->
 
     <TextView
         android:id="@+id/idTextView"

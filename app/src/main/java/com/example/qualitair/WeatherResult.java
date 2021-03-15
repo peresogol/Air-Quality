@@ -1,15 +1,28 @@
 package com.example.qualitair;
 
-public class WeatherResult {
+import java.io.Serializable;
+
+public class WeatherResult implements Serializable {
 
     private String hour;
     private String date;
     private String icon;
-    private int temperature;
-    private int pressure;
-    private int humidity;
-    private int windSpeed;
-    private int windDirection;
+    private String temperature;
+    private String pressure;
+    private String humidity;
+    private String windSpeed;
+    private String windDirection;
+
+    public WeatherResult(String hour, String date, String icon, String temperature, String pressure, String humidity, String windSpeed, String windDirection) {
+        this.hour = hour;
+        this.date = date;
+        this.icon = icon;
+        this.temperature = temperature;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.windSpeed = windSpeed;
+        this.windDirection = windDirection;
+    }
 
     public String getHour() {
         return this.hour;
@@ -23,23 +36,23 @@ public class WeatherResult {
         return this.icon;
     }
 
-    public int getTemperature() {
+    public String getTemperature() {
         return this.temperature;
     }
 
-    public int getPressure() {
+    public String getPressure() {
         return this.pressure;
     }
 
-    public int getHumidity() {
+    public String getHumidity() {
         return this.humidity;
     }
 
-    public int getWindSpeed() {
+    public String getWindSpeed() {
         return this.windSpeed;
     }
 
-    public int getWindDirection() {
+    public String getWindDirection() {
         return this.windDirection;
     }
 
@@ -55,23 +68,23 @@ public class WeatherResult {
         this.icon = icon;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(String temperature) {
         this.temperature = temperature;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(String pressure) {
         this.pressure = pressure;
     }
 
-    public void setHumidity(int humidity) {
+    public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
 
-    public void setWindSpeed(int windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
-    public void setWindDirection(int windDirection) {
+    public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
     }
 }

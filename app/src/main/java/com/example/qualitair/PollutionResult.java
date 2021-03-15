@@ -1,11 +1,20 @@
 package com.example.qualitair;
 
-public class PollutionResult {
+import java.io.Serializable;
+
+public class PollutionResult implements Serializable {
 
     private String date;
     private String hour;
     private String mainPollutant;
-    private int AirQualityIndexUS;
+    private String AirQualityIndexUS;
+
+    public PollutionResult(String date, String hour, String mainPollutant, String airQualityIndexUS) {
+        this.date = date;
+        this.hour = hour;
+        this.mainPollutant = mainPollutant;
+        AirQualityIndexUS = airQualityIndexUS;
+    }
 
     public String getDate() {
         return this.date;
@@ -19,7 +28,7 @@ public class PollutionResult {
         return this.mainPollutant;
     }
 
-    public int getAirQualityIndexUS() {
+    public String getAirQualityIndexUS() {
         return this.AirQualityIndexUS;
     }
 
@@ -35,7 +44,7 @@ public class PollutionResult {
         this.mainPollutant = mainPollutant;
     }
 
-    public void setAirQualityIndexUS(int airQualityIndexUS) {
+    public void setAirQualityIndexUS(String airQualityIndexUS) {
         AirQualityIndexUS = airQualityIndexUS;
     }
 }
