@@ -3,12 +3,14 @@ package com.example.qualitair;
 public class PersonalizedListData {
 
     private String placeName;
-    private String gpsCoordinates;
+    private String longitude;
+    private String latitude;
     private Boolean isFavourite;
 
-    public PersonalizedListData(String placeName, String gpsCoordinates, boolean b) {
+    public PersonalizedListData(String placeName, String longitude, String latitude, boolean b) {
         this.placeName = placeName;
-        this.gpsCoordinates = gpsCoordinates;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.isFavourite = false;
     }
 
@@ -16,8 +18,12 @@ public class PersonalizedListData {
         return this.placeName;
     }
 
-    public String getGpsCoordinates() {
-        return this.gpsCoordinates;
+    public String getLongitude() {
+        return this.longitude;
+    }
+
+    public String getLatitude() {
+        return this.latitude;
     }
 
     public Boolean getIsFavourite() {
@@ -28,8 +34,12 @@ public class PersonalizedListData {
         this.placeName = placeName;
     }
 
-    public void setGpsCoordinates(String gpsCoordinates) {
-        this.gpsCoordinates = gpsCoordinates;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
     public void setIsFavourite(Boolean isFavourite) {
@@ -38,7 +48,6 @@ public class PersonalizedListData {
 
     @Override
     public String toString() {
-        return this.placeName + " : " + this.gpsCoordinates +
-                "\n Favourite : " + this.isFavourite;
+        return '(' + this.longitude + " , " + this.latitude + ')';
     }
 }

@@ -48,7 +48,7 @@ public class PersonalizedListAdapter extends BaseAdapter {
         TextView textView_Coordinates = (TextView) retour.findViewById(R.id.textView_Coordinates);
         TextView textView_Place_Name = (TextView) retour.findViewById(R.id.textView_Place_Name);
         CheckBox checkBox_Star = (CheckBox) retour.findViewById(R.id.checkBox_Star);
-        textView_Coordinates.setText(this.listData.get(position).getGpsCoordinates());
+        textView_Coordinates.setText(this.listData.get(position).toString());
         textView_Place_Name.setText(this.listData.get(position).getPlaceName());
         checkBox_Star.setChecked(this.listData.get(position).getIsFavourite());
 
