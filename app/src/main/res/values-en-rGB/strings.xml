@@ -4,7 +4,7 @@
     <string name="villeGeolocalisation">Example : Toulouse</string>
     <string name="boutonGeolocalisation">Geolocate me !</string>
     <string name="TitreMainActivity">The Air quailty, wherever you are</string>
-    <string name="buttonRechercher">"Search ! "</string>
+    <string name="buttonRechercher">"Search !"</string>
     <string name="radioButton_Pollution">Pollution</string>
     <string name="VilleLocalisation">Nearest city :</string>
     <string name="radioButton_MeteoAndPollution">Weather and pollution</string>

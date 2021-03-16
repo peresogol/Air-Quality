@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import static com.example.qualitair.R.string.warning_no_radio_selection;
 
@@ -22,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     WeatherResult weatherResult;
     PollutionResult pollutionResult;
     Place placeResult;
+    TextView nearestCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.nearestCity = (TextView) findViewById(R.id.villeGeolocalisation);
         Button geoLoc = (Button) findViewById(R.id.boutonGeolocalisation);
         geoLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,9 +61,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
-            weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
-            pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
-            placeResult = (Place) data.getExtras().getSerializable("place");
+            this.weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
+            this.pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
+            this.placeResult = (Place) data.getExtras().getSerializable("place");
+            this.nearestCity.setText("zxaxazx");
             Log.v("raoue", weatherResult.toString());
             Log.v("raoue", pollutionResult.toString());
             Log.v("raoue", placeResult.toString());
