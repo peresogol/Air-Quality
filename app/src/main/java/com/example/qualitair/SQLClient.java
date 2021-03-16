@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class SQLClient extends SQLiteOpenHelper {
     // database version = 5
@@ -12,7 +13,7 @@ public class SQLClient extends SQLiteOpenHelper {
     // Database file name
     public static final String  DATABASE_FILE = "villes.db";
     // db creation query
-    public static final String SQL_CREATE = "CREATE TABLE Villes (id INTEGER PRIMARY KEY AUTOINCREMENT, nom TEXT, longitude TEXT, latitude TEXT, isFavourite INTEGER);";
+    public static final String SQL_CREATE = "CREATE TABLE Villes (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, longitude TEXT, latitude TEXT, isFavourite INTEGER);";
     // db deletion query
     public static final String SQL_DELETE = "DROP TABLE IF EXISTS Villes;";
 
@@ -34,17 +35,30 @@ public class SQLClient extends SQLiteOpenHelper {
 
     public boolean insertData(String name, String longitude, String latitude) {
         SQLiteDatabase dbW = this.getWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
-
-        contentValues.put("nom", name);
-        contentValues.put("longitude",longitude);
-        contentValues.put("latitude",latitude);
-        contentValues.put("isFavourite",false);
-
+        contentValues.put("name", name);
+        contentValues.put("longitude", longitude);
+        contentValues.put("latitude", latitude);
+        contentValues.put("isFavourite", 0);
         long result = dbW.insert("Villes",null, contentValues);
-        dbW.close();
+        // utile ??
+        // dbW.close();
 
         return (result != -1); // -1 = data doesn't insert into db
+    }
+
+    public boolean updateData(Place place) {
+        SQLiteDatabase dbW = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", place.getPlaceName());
+        contentValues.put("longitude", place.getLongitude());
+        contentValues.put("latitude", place.getLatitude());
+        contentValues.put("isFavourite", place.getIsFavourite());
+
+        int result = dbW.update("villes.db", contentValues, "_name = ?", new String[]{String.valueOf(place.getPlaceName())});
+        return (result != -1);
     }
 
     public Cursor viewData() {

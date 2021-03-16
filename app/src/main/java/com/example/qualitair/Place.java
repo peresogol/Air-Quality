@@ -1,17 +1,17 @@
 package com.example.qualitair;
 
-public class PersonalizedListData {
+public class Place {
 
     private String placeName;
     private String longitude;
     private String latitude;
     private Boolean isFavourite;
 
-    public PersonalizedListData(String placeName, String longitude, String latitude, boolean b) {
+    public Place(String placeName, String longitude, String latitude, boolean isFavourite) {
         this.placeName = placeName;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.isFavourite = false;
+        this.isFavourite = isFavourite;
     }
 
     public String getPlaceName() {
