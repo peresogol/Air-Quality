@@ -1,10 +1,14 @@
 package com.example.qualitair;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,29 +25,53 @@ public class History extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history);
+        setContentView(R.layout.activity_history);
         this.db = new SQLClient(this);
         this.viewData();
 
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
-                cb.setChecked(!cb.isChecked());
-                Place data = (Place) listView.getItemAtPosition(position);
-                data.setIsFavourite(cb.isChecked());
-                if (cb.isChecked()) {
-                    Toast.makeText(History.this,"" + data.getPlaceName() + " a été rajouté aux favoris", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(History.this,"" + data.getPlaceName() + " a été enlevé des favoris", Toast.LENGTH_SHORT).show();
-                }
+
+                AlertDialog.Builder popUp = new AlertDialog.Builder(History.this);
+                popUp.setTitle("Ajouter ce lieu aux favoris");
+                popUp.setMessage("Vous pouvez renommer le lieu pour le retrouver facilement");
+                final EditText input = new EditText(History.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                input.setLayoutParams(lp);
+                Place place = (Place) parent.getItemAtPosition(position);
+                input.setText(place.getPlaceName());
+                popUp.setView(input);
+                popUp.setPositiveButton("Ajouter", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
+                        cb.setChecked(!cb.isChecked());
+                        place.setIsFavourite(cb.isChecked());
+                        place.setPlaceName(input.getText().toString());
+                        if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
+                            Toast.makeText(History.this, "Erreur en renommant le lieu",Toast.LENGTH_SHORT);
+                        } else {
+                            Toast.makeText(History.this,"Le nom du lieu a été remplacé par " + place.getPlaceName(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                popUp.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(History.this,"Le nom du lieu reste " + place.getPlaceName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                popUp.show();
             }
         });
     }
 
     private void viewData() {
         Cursor cursor = db.viewData();
-        this.listData = this.getListData();
+        this.listData = new ArrayList<>();
         // if there is at least one result
         if (cursor.moveToFirst()) {
             do {
@@ -61,17 +89,6 @@ public class History extends AppCompatActivity {
         this.listView = (ListView)findViewById(R.id.listView);
         this.adapter = new PlacesListAdapter(this.listData, this);
         this.listView.setAdapter(this.adapter);
-    }
-
-    private List<Place> getListData() {
-        List<Place> listData = new ArrayList<>();
-        Place data1 = new Place("Toulouse", "44.44", "44.44", true);
-        Place data2 = new Place("Cahors", "33.33", "33.33", true);
-        Place data3 = new Place("Vierzon", "22.22", "22.22", false);
-        listData.add(data1);
-        listData.add(data2);
-        listData.add(data3);
-        return listData;
     }
 
 }

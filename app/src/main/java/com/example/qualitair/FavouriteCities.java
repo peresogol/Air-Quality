@@ -1,10 +1,14 @@
 package com.example.qualitair;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,29 +25,29 @@ public class FavouriteCities extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history);
+        setContentView(R.layout.activity_history);
         this.db = new SQLClient(this);
-        this.viewData();
+        this.viewFavourites();
 
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Place place = (Place) parent.getItemAtPosition(position);
                 CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
                 cb.setChecked(!cb.isChecked());
-                Place data = (Place) listView.getItemAtPosition(position);
-                data.setIsFavourite(cb.isChecked());
-                if (cb.isChecked()) {
-                    Toast.makeText(FavouriteCities.this,"" + data.getPlaceName() + " a été rajouté aux favoris", Toast.LENGTH_SHORT).show();
+                place.setIsFavourite(cb.isChecked());
+                if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
+                    Toast.makeText(FavouriteCities.this, "Erreur en enlevant ce lieu des favoris",Toast.LENGTH_SHORT);
                 } else {
-                    Toast.makeText(FavouriteCities.this,"" + data.getPlaceName() + " a été enlevé des favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavouriteCities.this,"" +place.getPlaceName() + "a été supprimé des favoris", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void viewData() {
-        Cursor cursor = db.viewData();
-        this.listData = this.getListData();
+    private void viewFavourites() {
+        Cursor cursor = db.viewFavourites();
+        this.listData = new ArrayList<>();
         // if there is at least one result
         if (cursor.moveToFirst()) {
             do {
@@ -56,22 +60,11 @@ public class FavouriteCities extends AppCompatActivity {
                 // while there is another next result
             } while (cursor.moveToNext());
         } else {
-            Toast.makeText(this,"Il n'y a pas de valeurs à lire",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Il n'y a pas de valeurs à lire", Toast.LENGTH_SHORT).show();
         }
         this.listView = (ListView)findViewById(R.id.listView);
         this.adapter = new PlacesListAdapter(this.listData, this);
         this.listView.setAdapter(this.adapter);
     }
 
-    private List<Place> getListData() {
-        List<Place> listData = new ArrayList<>();
-        Place data1 = new Place("Toulouse", "44.44", "44.44", true);
-        Place data2 = new Place("Cahors", "33.33", "33.33", true);
-        Place data3 = new Place("Vierzon", "22.22", "22.22", false);
-        listData.add(data1);
-        listData.add(data2);
-        listData.add(data3);
-
-        return listData;
-    }
 }

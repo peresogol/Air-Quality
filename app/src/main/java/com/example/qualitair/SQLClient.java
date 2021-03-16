@@ -48,16 +48,20 @@ public class SQLClient extends SQLiteOpenHelper {
         return (result != -1); // -1 = data doesn't insert into db
     }
 
-    public boolean updateData(Place place) {
+    public boolean updateData(String name, String longitude, String latitude, boolean isFavourite) {
         SQLiteDatabase dbW = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("name", place.getPlaceName());
-        contentValues.put("longitude", place.getLongitude());
-        contentValues.put("latitude", place.getLatitude());
-        contentValues.put("isFavourite", place.getIsFavourite());
+        contentValues.put("name", name);
+        contentValues.put("longitude", longitude);
+        contentValues.put("latitude", latitude);
+        if (isFavourite) {
+            contentValues.put("isFavourite",1);
+        } else {
+            contentValues.put("isFavourite", 0);
+        }
 
-        int result = dbW.update("villes.db", contentValues, "_name = ?", new String[]{String.valueOf(place.getPlaceName())});
+        int result = dbW.update("Villes", contentValues, "longitude = ? AND latitude = ?", new String[]{longitude, latitude});
         return (result != -1);
     }
 
@@ -66,4 +70,8 @@ public class SQLClient extends SQLiteOpenHelper {
         return dbR.rawQuery("select * from Villes order by id ASC", null);
     }
 
+    public Cursor viewFavourites() {
+        SQLiteDatabase dbR = this.getReadableDatabase();
+        return dbR.rawQuery("select * from Villes where isFavourite = 1 order by id ASC", null);
+    }
 }
