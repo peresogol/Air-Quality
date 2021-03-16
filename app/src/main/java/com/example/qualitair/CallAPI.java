@@ -10,8 +10,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +25,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
+
 
 public class CallAPI extends AppCompatActivity {
 
@@ -109,13 +105,15 @@ public class CallAPI extends AppCompatActivity {
                     JsonObject location = data.getAsJsonObject("location");
                     JsonArray coordinates = location.getAsJsonArray("coordinates");
 
-                   // Create location class
-                    LocationResult locationResult = new LocationResult(
+                   // Create Place (location) class
+                    Place placeResult = new Place(
                             data.get("city").toString(),
                             data.get("state").toString(),
                             data.get("country").toString(),
+                            data.get("city").toString(),
                             coordinates.get(0).toString(),
-                            coordinates.get(1).toString()
+                            coordinates.get(1).toString(),
+                            false
                     );
 
                     // Donnees des sondes (meteo et pollution)
@@ -131,7 +129,7 @@ public class CallAPI extends AppCompatActivity {
 
                     // Return objects
                     Intent intentRetour = new Intent();
-                    intentRetour.putExtra("location", locationResult);
+                    intentRetour.putExtra("place", placeResult);
                     intentRetour.putExtra("weather", weatherResult);
                     intentRetour.putExtra("pollution", pollutionResult);
                     setResult(Activity.RESULT_OK, intentRetour);

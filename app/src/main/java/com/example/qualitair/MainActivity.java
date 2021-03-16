@@ -3,11 +3,8 @@ package com.example.qualitair;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.strictmode.IntentReceiverLeakedViolation;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,13 +17,11 @@ import android.widget.Toast;
 import static com.example.qualitair.R.string.warning_no_radio_selection;
 
 
-import java.util.UUID;
-
 public class MainActivity extends AppCompatActivity {
 
     WeatherResult weatherResult;
     PollutionResult pollutionResult;
-    LocationResult locationResult;
+    Place placeResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
             weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
             pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
-            locationResult = (LocationResult) data.getExtras().getSerializable("location");
+            placeResult = (Place) data.getExtras().getSerializable("place");
             Log.v("raoue", weatherResult.toString());
             Log.v("raoue", pollutionResult.toString());
-            Log.v("raoue", locationResult.toString());
+            Log.v("raoue", placeResult.toString());
         }
     }
 
