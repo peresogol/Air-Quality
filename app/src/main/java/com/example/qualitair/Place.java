@@ -22,6 +22,14 @@ public class Place implements Serializable {
         this.isFavourite = isFavourite;
     }
 
+    public Place(String placeName, String longitude, String latitude, Boolean isFavourite) {
+        this.placeName = placeName;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.isFavourite = isFavourite;
+    }
+
+
     public String getCity() {
         return city;
     }
