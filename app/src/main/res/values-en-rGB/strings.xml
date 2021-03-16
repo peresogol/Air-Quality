@@ -17,4 +17,5 @@
     <string name="menu_title_history">History</string>
     <string name="menu_title_favourite">Your favourites</string>
     <string name="setFavourite">Add to favourites</string>
+    <string name="warning_no_radio_selection">Please, select information to display</string>
 </resources>

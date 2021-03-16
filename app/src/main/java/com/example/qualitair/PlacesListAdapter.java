@@ -10,13 +10,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class PersonalizedListAdapter extends BaseAdapter {
+public class PlacesListAdapter extends BaseAdapter {
 
-    private List<PersonalizedListData> listData;
+    private List<Place> listData;
     private LayoutInflater inflater;
     private Context context;
 
-    public PersonalizedListAdapter(List<PersonalizedListData> listData, Context context) {
+    public PlacesListAdapter(List<Place> listData, Context context) {
         this.listData = listData;
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); // voir p73

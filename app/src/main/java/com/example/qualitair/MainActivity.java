@@ -2,9 +2,10 @@ package com.example.qualitair;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.strictmode.IntentReceiverLeakedViolation;
 import android.util.Log;
@@ -13,6 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+import static com.example.qualitair.R.string.warning_no_radio_selection;
+
 
 import java.util.UUID;
 
@@ -32,6 +38,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentCallAPI = new Intent(MainActivity.this, CallAPI.class);
                 startActivityForResult(intentCallAPI, 2);
+            }
+        });
+
+        Button displayResult = (Button) findViewById(R.id.buttonRechercher);
+        displayResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioGroup radioGroup_Choices = (RadioGroup) findViewById(R.id.radioGroup);
+                int radioButton_id = radioGroup_Choices.getCheckedRadioButtonId();
+                if (radioButton_id != -1) {
+                    RadioButton radioButton_Choices = (RadioButton) findViewById(radioButton_id);
+                    Intent intent = new Intent(MainActivity.this, DisplayResult.class);
+                    intent.putExtra("choice", radioButton_Choices.getText());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, warning_no_radio_selection, Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

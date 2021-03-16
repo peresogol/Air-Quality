@@ -18,7 +18,8 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".FavouriteCities">
+        <activity android:name=".FavouriteCities"
+            android:label="@string/menu_title_favourite">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +29,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".History">
+        <activity android:name=".History"
+            android:label="@string/menu_title_history">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
