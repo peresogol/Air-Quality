@@ -25,7 +25,7 @@ public class History extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history);
+        setContentView(R.layout.activity_history);
         this.db = new SQLClient(this);
         this.viewData();
 
@@ -35,7 +35,7 @@ public class History extends AppCompatActivity {
 
                 AlertDialog.Builder popUp = new AlertDialog.Builder(History.this);
                 popUp.setTitle("Ajouter ce lieu aux favoris");
-                popUp.setMessage("Renommer ce lieu afin de le trouver plus facilement dans vos favoris");
+                popUp.setMessage("Vous pouvez renommer le lieu pour le retrouver facilement");
                 final EditText input = new EditText(History.this);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -44,16 +44,24 @@ public class History extends AppCompatActivity {
                 Place place = (Place) parent.getItemAtPosition(position);
                 input.setText(place.getPlaceName());
                 popUp.setView(input);
-                popUp.setPositiveButton("Renommer", new DialogInterface.OnClickListener() {
+                popUp.setPositiveButton("Ajouter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(History.this,"Le nom du lieu reste " + place.getPlaceName(), Toast.LENGTH_SHORT);
+                        CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
+                        cb.setChecked(!cb.isChecked());
+                        place.setIsFavourite(cb.isChecked());
+                        place.setPlaceName(input.getText().toString());
+                        if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
+                            Toast.makeText(History.this, "Erreur en renommant le lieu",Toast.LENGTH_SHORT);
+                        } else {
+                            Toast.makeText(History.this,"Le nom du lieu a été remplacé par " + place.getPlaceName(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 popUp.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(History.this,"Le nom du lieu reste " + place.getPlaceName(), Toast.LENGTH_SHORT);
+                        Toast.makeText(History.this,"Le nom du lieu reste " + place.getPlaceName(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 popUp.show();
@@ -63,7 +71,7 @@ public class History extends AppCompatActivity {
 
     private void viewData() {
         Cursor cursor = db.viewData();
-        this.listData = this.getListData();
+        this.listData = new ArrayList<>();
         // if there is at least one result
         if (cursor.moveToFirst()) {
             do {
@@ -81,17 +89,6 @@ public class History extends AppCompatActivity {
         this.listView = (ListView)findViewById(R.id.listView);
         this.adapter = new PlacesListAdapter(this.listData, this);
         this.listView.setAdapter(this.adapter);
-    }
-
-    private List<Place> getListData() {
-        List<Place> listData = new ArrayList<>();
-        Place data1 = new Place("Toulouse", "44.44", "44.44", true);
-        Place data2 = new Place("Cahors", "33.33", "33.33", true);
-        Place data3 = new Place("Vierzon", "22.22", "22.22", false);
-        listData.add(data1);
-        listData.add(data2);
-        listData.add(data3);
-        return listData;
     }
 
 }

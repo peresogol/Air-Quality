@@ -42,7 +42,7 @@ public class PlacesListAdapter extends BaseAdapter {
         View retour = convertView;
 
         if (retour == null) {
-            retour = inflater.inflate(R.layout.personalized_list, null);
+            retour = inflater.inflate(R.layout.activity_personalized_list, null);
         }
 
         TextView textView_Coordinates = (TextView) retour.findViewById(R.id.textView_Coordinates);

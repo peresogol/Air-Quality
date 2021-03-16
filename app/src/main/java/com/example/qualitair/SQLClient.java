@@ -61,7 +61,7 @@ public class SQLClient extends SQLiteOpenHelper {
             contentValues.put("isFavourite", 0);
         }
 
-        int result = dbW.update("villes.db", contentValues, "_name = ?", new String[]{String.valueOf(name)});
+        int result = dbW.update("Villes", contentValues, "longitude = ? AND latitude = ?", new String[]{longitude, latitude});
         return (result != -1);
     }
 
@@ -70,4 +70,8 @@ public class SQLClient extends SQLiteOpenHelper {
         return dbR.rawQuery("select * from Villes order by id ASC", null);
     }
 
+    public Cursor viewFavourites() {
+        SQLiteDatabase dbR = this.getReadableDatabase();
+        return dbR.rawQuery("select * from Villes where isFavourite = 1 order by id ASC", null);
+    }
 }

@@ -22,18 +22,18 @@ public class DisplayResult extends AppCompatActivity {
 
         // a supprimer lorsque l'api fonctionnera
         this.db = new SQLClient(this);
-        if (this.db.insertData("Cahors", "1234567", "9876")) {
+        if (this.db.insertData("Toulouse", "123567", "976")) {
             Log.v("tag", "inseré oui");
         } else {
             Log.v("tag", "inséré non");
         }
         String choice = this.getIntent().getStringExtra("choice");
         if (choice.equals(getResources().getString(R.string.radioButton_Meteo))) {
-            setContentView(R.layout.display_result_weather);
+            setContentView(R.layout.activity_display_result_weather);
         } else if (choice.equals(getResources().getString(R.string.radioButton_Pollution))) {
-            setContentView(R.layout.display_result_pollution);
+            setContentView(R.layout.activity_display_result_pollution);
         } else if (choice.equals(getResources().getString(R.string.radioButton_MeteoAndPollution))) {
-            setContentView(R.layout.display_result_weather_and_pollution);
+            setContentView(R.layout.activity_display_result_weather_and_pollution);
         } else {
             Log.e("Error", "Choice from getStringExtra must be Weather one of those from RadioGroup from MainActivity");
         }
@@ -54,7 +54,7 @@ public class DisplayResult extends AppCompatActivity {
                 // ajouter code afin d'insérer le fait que cette ville soit favorite dans la base de données
                 item.setChecked(!item.isChecked());
                 this.place.setIsFavourite(!item.isChecked());
-                this.db.updateData(this.place);
+                this.db.updateData(this.place.getPlaceName(),this.place.getLongitude(),this.place.getLatitude(),this.place.getIsFavourite());
                 if (item.isChecked()) {
                     item.setIcon(R.drawable.filled_star);
                     Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + " a été rajouté aux favoris", Toast.LENGTH_SHORT).show();
