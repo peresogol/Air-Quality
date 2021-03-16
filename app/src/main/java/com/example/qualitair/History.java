@@ -1,10 +1,14 @@
 package com.example.qualitair;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,15 +32,31 @@ public class History extends AppCompatActivity {
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
-                cb.setChecked(!cb.isChecked());
-                Place data = (Place) listView.getItemAtPosition(position);
-                data.setIsFavourite(cb.isChecked());
-                if (cb.isChecked()) {
-                    Toast.makeText(History.this,"" + data.getPlaceName() + " a été rajouté aux favoris", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(History.this,"" + data.getPlaceName() + " a été enlevé des favoris", Toast.LENGTH_SHORT).show();
-                }
+
+                AlertDialog.Builder popUp = new AlertDialog.Builder(History.this);
+                popUp.setTitle("Ajouter ce lieu aux favoris");
+                popUp.setMessage("Renommer ce lieu afin de le trouver plus facilement dans vos favoris");
+                final EditText input = new EditText(History.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                input.setLayoutParams(lp);
+                Place place = (Place) parent.getItemAtPosition(position);
+                input.setText(place.getPlaceName());
+                popUp.setView(input);
+                popUp.setPositiveButton("Renommer", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(History.this,"Le nom du lieu reste " + place.getPlaceName(), Toast.LENGTH_SHORT);
+                    }
+                });
+                popUp.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(History.this,"Le nom du lieu reste " + place.getPlaceName(), Toast.LENGTH_SHORT);
+                    }
+                });
+                popUp.show();
             }
         });
     }
