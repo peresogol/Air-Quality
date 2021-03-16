@@ -39,15 +39,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2) {
-            if(resultCode == Activity.RESULT_OK){
-                weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
-                pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
-                locationResult = (LocationResult) data.getExtras().getSerializable("location");
-                Log.v("raoue", weatherResult.toString());
-                Log.v("raoue", pollutionResult.toString());
-                Log.v("raoue", locationResult.toString());
-            }
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+            weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
+            pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
+            locationResult = (LocationResult) data.getExtras().getSerializable("location");
+            Log.v("raoue", weatherResult.toString());
+            Log.v("raoue", pollutionResult.toString());
+            Log.v("raoue", locationResult.toString());
         }
     }
 
