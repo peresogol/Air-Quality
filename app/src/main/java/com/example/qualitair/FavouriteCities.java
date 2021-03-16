@@ -25,7 +25,7 @@ public class FavouriteCities extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.activity_favourite_cities);
         this.db = new SQLClient(this);
         this.viewFavourites();
 
@@ -39,7 +39,7 @@ public class FavouriteCities extends AppCompatActivity {
                 if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
                     Toast.makeText(FavouriteCities.this, "Erreur en enlevant ce lieu des favoris",Toast.LENGTH_SHORT);
                 } else {
-                    Toast.makeText(FavouriteCities.this,"" +place.getPlaceName() + "a été supprimé des favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavouriteCities.this,"" +place.getPlaceName() + " a été supprimé des favoris", Toast.LENGTH_SHORT).show();
                 }
             }
         });

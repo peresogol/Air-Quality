@@ -34,8 +34,8 @@ public class History extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 AlertDialog.Builder popUp = new AlertDialog.Builder(History.this);
-                popUp.setTitle("Ajouter ce lieu aux favoris");
-                popUp.setMessage("Vous pouvez renommer le lieu pour le retrouver facilement");
+                popUp.setTitle(R.string.popup_title);
+                popUp.setMessage(R.string.popup_message);
                 final EditText input = new EditText(History.this);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -44,7 +44,7 @@ public class History extends AppCompatActivity {
                 Place place = (Place) parent.getItemAtPosition(position);
                 input.setText(place.getPlaceName());
                 popUp.setView(input);
-                popUp.setPositiveButton("Ajouter", new DialogInterface.OnClickListener() {
+                popUp.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
@@ -52,16 +52,16 @@ public class History extends AppCompatActivity {
                         place.setIsFavourite(cb.isChecked());
                         place.setPlaceName(input.getText().toString());
                         if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
-                            Toast.makeText(History.this, "Erreur en renommant le lieu",Toast.LENGTH_SHORT);
+                            Toast.makeText(History.this, R.string.toast_rename_error,Toast.LENGTH_SHORT);
                         } else {
-                            Toast.makeText(History.this,"Le nom du lieu a été remplacé par " + place.getPlaceName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(History.this,getString(R.string.toast_rename_ok) + place.getPlaceName(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-                popUp.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+                popUp.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(History.this,"Le nom du lieu reste " + place.getPlaceName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(History.this,getString(R.string.toast_popup_when_canceled) + place.getPlaceName(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 popUp.show();

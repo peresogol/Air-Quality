@@ -17,4 +17,11 @@
     <string name="menu_title_favourite">Vos favoris</string>
     <string name="setFavourite">Ajouter aux favoris</string>
     <string name="warning_no_radio_selection">Veuillez selectionner les informations à afficher</string>
+    <string name="popup_title">Ajouter ce lieu aux favoris</string>
+    <string name="popup_message">Vous pouvez renommer le lieu pour le retrouver facilement</string>
+    <string name="toast_rename_error">Erreur en renommant le lieu</string>
+    <string name="toast_rename_ok">\"Le nom du lieu a été remplacé par \"</string>
+    <string name="cancel">Annuler</string>
+    <string name="toast_popup_when_canceled">\"Le nom du lieu reste \"</string>
+    <string name="add">Ajouter</string>
 </resources>
