@@ -10,8 +10,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +25,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
+
 
 public class CallAPI extends AppCompatActivity {
 
@@ -46,8 +42,6 @@ public class CallAPI extends AppCompatActivity {
     private String longitude;
     private String latitude;
     //  private static final String BASE_URL = "http://api.airvisual.com/v2/nearest_city?lat=" + lattitude + "&lon="+ longitude +"&key=fb2d9bd0-77c5-458e-b830-fac56be1ec93";
-
-    private TextView textViewJSON; // TextView dans lequel on va insérer le JSON récupéré de l'API
 
     // URL de base de l'API (doit se terminer par /)
     private static final String API_BASE_URL = "https://api.airvisual.com/v2/";
@@ -75,9 +69,6 @@ public class CallAPI extends AppCompatActivity {
             ActivityCompat.requestPermissions(CallAPI.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
-        // récupération du textView
-        this.textViewJSON = (TextView) findViewById(R.id.idTextView);
-
         // Construction d'une instance de retrofit (Etape #2 du cours)
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(CallAPI.API_BASE_URL)
@@ -99,7 +90,6 @@ public class CallAPI extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     // Recupere le contenu JSON de la réponse
                     JsonElement contenu = response.body();
-                    textViewJSON.setText(contenu.toString());
 
                     // Convertir en JsonObject pour pouvoir accéder aux attributs
                     JsonObject jsonGlobal = contenu.getAsJsonObject();
@@ -109,13 +99,15 @@ public class CallAPI extends AppCompatActivity {
                     JsonObject location = data.getAsJsonObject("location");
                     JsonArray coordinates = location.getAsJsonArray("coordinates");
 
-                   // Create location class
-                    LocationResult locationResult = new LocationResult(
+                   // Create Place (location) class
+                    Place placeResult = new Place(
                             data.get("city").toString(),
                             data.get("state").toString(),
                             data.get("country").toString(),
+                            data.get("city").toString(),
                             coordinates.get(0).toString(),
-                            coordinates.get(1).toString()
+                            coordinates.get(1).toString(),
+                            false
                     );
 
                     // Donnees des sondes (meteo et pollution)
@@ -129,16 +121,13 @@ public class CallAPI extends AppCompatActivity {
                     JsonObject pollution = current.getAsJsonObject("pollution");
                     PollutionResult pollutionResult = getPollutionResult(pollution);
 
-                    // Return objects
+                    // Return objects to main activity
                     Intent intentRetour = new Intent();
-                    intentRetour.putExtra("location", locationResult);
+                    intentRetour.putExtra("place", placeResult);
                     intentRetour.putExtra("weather", weatherResult);
                     intentRetour.putExtra("pollution", pollutionResult);
                     setResult(Activity.RESULT_OK, intentRetour);
                     finish();
-
-                    // Affiche la chaine sur l'interface
-                    textViewJSON.setText(contenu.toString());
                 } else {
                     Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + response.errorBody(), Toast.LENGTH_SHORT).show();
                 }

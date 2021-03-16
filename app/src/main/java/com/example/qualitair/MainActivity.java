@@ -3,9 +3,7 @@ package com.example.qualitair;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,17 +16,17 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import static com.example.qualitair.R.string.warning_no_radio_selection;
 
+
 public class MainActivity extends AppCompatActivity {
 
     WeatherResult weatherResult;
     PollutionResult pollutionResult;
-    LocationResult locationResult;
+    Place placeResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Button geoLoc = (Button) findViewById(R.id.boutonGeolocalisation);
         geoLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,15 +57,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2) {
-            if (resultCode == Activity.RESULT_OK) {
-                weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
-                pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
-                locationResult = (LocationResult) data.getExtras().getSerializable("location");
-                Log.v("raoue", weatherResult.toString());
-                Log.v("raoue", pollutionResult.toString());
-                Log.v("raoue", locationResult.toString());
-            }
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+            weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
+            pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
+            placeResult = (Place) data.getExtras().getSerializable("place");
+            Log.v("raoue", weatherResult.toString());
+            Log.v("raoue", pollutionResult.toString());
+            Log.v("raoue", placeResult.toString());
         }
     }
 

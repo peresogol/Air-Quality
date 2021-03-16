@@ -5,22 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <!-- <Button
-        android:id="@+id/idButtonFiche"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_weight="0.5"
-        android:text="@string/appelAPI"
-        tools:ignore="MissingConstraints" />-->
-
-    <TextView
-        android:id="@+id/idTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/TextDeBase"
-        tools:ignore="MissingConstraints" />
-
     <ProgressBar
         android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyle"
@@ -29,6 +13,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idTextView" />
+        app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
