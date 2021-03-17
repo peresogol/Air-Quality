@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/setFavourite"
-        android:title="@string/setFavourite"
+        android:title="@string/set_favourite_city"
         android:icon="@drawable/empty_star"
         app:showAsAction="ifRoom"/>
 

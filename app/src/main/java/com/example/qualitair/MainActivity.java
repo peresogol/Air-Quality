@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 if (radioButton_id != -1) {
                     RadioButton radioButton_Choices = (RadioButton) findViewById(radioButton_id);
                     Intent intent = new Intent(MainActivity.this, DisplayResult.class);
-                    intent.putExtra("choice", radioButton_id);
+                    intent.putExtra("choice", radioButton_Choices.getText());
                     Log.v("ahoe", String.valueOf(radioButton_id));
                     intent.putExtra("place", placeResult);
                     intent.putExtra("weather", weatherResult);
