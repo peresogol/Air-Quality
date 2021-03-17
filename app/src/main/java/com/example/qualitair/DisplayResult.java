@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,12 +42,30 @@ public class DisplayResult extends AppCompatActivity {
         } else if (choice.equals(getResources().getString(R.string.radioButton_MeteoAndPollution))) {
             this.displayWeatherAndPollution();
         } else {
-            Log.e(TAG, getString(R.string.error_getStringExtra_DisplaResult));
+            Log.e("Error", "Choice from getStringExtra must be Weather one of those from RadioGroup from MainActivity");
         }
     }
 
     private void displayWeatherAndPollution() {
         setContentView(R.layout.activity_display_result_weather_and_pollution);
+        TextView date = findViewById(R.id.weatherAndPollutionDate);
+        TextView hour = findViewById(R.id.weatherAndPollutionHour);
+        TextView temp = findViewById(R.id.weatherAndPollutionTemp);
+        TextView pr = findViewById(R.id.weatherAndPollutionPressure);
+        TextView hu = findViewById(R.id.weatherAndPollutionHumidity);
+        TextView ws = findViewById(R.id.weatherAndPollutionWindSpeed);
+        TextView wd = findViewById(R.id.weatherAndPollutionWindDirection);
+        TextView aqi = findViewById(R.id.weatherAndPollutionLevel);
+        TextView pollutant = findViewById(R.id.weatherAndPollutionMainPollutant);
+        date.setText(this.pollutionResult.getDate());
+        hour.setText(this.pollutionResult.getHour());
+        pollutant.setText(this.pollutionResult.getMainPollutant());
+        aqi.setText(this.pollutionResult.getAirQualityIndexUS());
+        temp.setText(this.weatherResult.getTemperature());
+        pr.setText(this.weatherResult.getPressure());
+        hu.setText(this.weatherResult.getHumidity());
+        ws.setText(this.weatherResult.getWindSpeed());
+        wd.setText(this.weatherResult.getWindDirection());
     }
 
     private void displayPollution() {
@@ -55,10 +74,12 @@ public class DisplayResult extends AppCompatActivity {
         TextView hour = findViewById(R.id.pollutionHour);
         TextView pollutant = findViewById(R.id.pollutant);
         TextView aqi = findViewById(R.id.pollutionLevel);
+        Log.v("date", this.pollutionResult.getDate());
+        Log.v("obj", pollutant.toString());
         date.setText(this.pollutionResult.getDate());
         hour.setText(this.pollutionResult.getHour());
         pollutant.setText(this.pollutionResult.getMainPollutant());
-        aqi.setText(String.format("%s (AQI US)", this.pollutionResult.getAirQualityIndexUS()));
+        aqi.setText(this.pollutionResult.getAirQualityIndexUS());
     }
 
     private void displayWeather() {
