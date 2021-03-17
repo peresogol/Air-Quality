@@ -19,7 +19,7 @@ public class PlacesListAdapter extends BaseAdapter {
     public PlacesListAdapter(List<Place> listData, Context context) {
         this.listData = listData;
         this.context = context;
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE); // voir p73
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class PlacesListAdapter extends BaseAdapter {
         View retour = convertView;
 
         if (retour == null) {
-            retour = inflater.inflate(R.layout.activity_personalized_list, null);
+            retour = this.inflater.inflate(R.layout.activity_personalized_list, null);
         }
 
         TextView textView_Coordinates = (TextView) retour.findViewById(R.id.textView_Coordinates);

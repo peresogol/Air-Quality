@@ -91,14 +91,14 @@ public class WeatherResult implements Serializable {
     @Override
     public String toString() {
         return "WeatherResult{" +
-                "hour='" + hour + '\'' +
-                ", date='" + date + '\'' +
-                ", icon='" + icon + '\'' +
-                ", temperature='" + temperature + '\'' +
-                ", pressure='" + pressure + '\'' +
-                ", humidity='" + humidity + '\'' +
-                ", windSpeed='" + windSpeed + '\'' +
-                ", windDirection='" + windDirection + '\'' +
+                "hour='" + this.hour + '\'' +
+                ", date='" + this.date + '\'' +
+                ", icon='" + this.icon + '\'' +
+                ", temperature='" + this.temperature + '\'' +
+                ", pressure='" + this.pressure + '\'' +
+                ", humidity='" + this.humidity + '\'' +
+                ", windSpeed='" + this.windSpeed + '\'' +
+                ", windDirection='" + this.windDirection + '\'' +
                 '}';
     }
 }

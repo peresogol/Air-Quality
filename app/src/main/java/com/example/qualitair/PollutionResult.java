@@ -7,13 +7,13 @@ public class PollutionResult implements Serializable {
     private String date;
     private String hour;
     private String mainPollutant;
-    private String AirQualityIndexUS;
+    private String airQualityIndexUS;
 
     public PollutionResult(String hour, String date, String mainPollutant, String airQualityIndexUS) {
         this.hour = hour;
         this.date = date;
         this.mainPollutant = mainPollutant;
-        AirQualityIndexUS = airQualityIndexUS;
+        this.airQualityIndexUS = airQualityIndexUS;
     }
 
     public String getDate() {
@@ -29,7 +29,7 @@ public class PollutionResult implements Serializable {
     }
 
     public String getAirQualityIndexUS() {
-        return this.AirQualityIndexUS;
+        return this.airQualityIndexUS;
     }
 
     public void setDate(String date) {
@@ -45,16 +45,16 @@ public class PollutionResult implements Serializable {
     }
 
     public void setAirQualityIndexUS(String airQualityIndexUS) {
-        AirQualityIndexUS = airQualityIndexUS;
+        this.airQualityIndexUS = airQualityIndexUS;
     }
 
     @Override
     public String toString() {
         return "PollutionResult{" +
-                "date='" + date + '\'' +
-                ", hour='" + hour + '\'' +
-                ", mainPollutant='" + mainPollutant + '\'' +
-                ", AirQualityIndexUS='" + AirQualityIndexUS + '\'' +
+                "date='" + this.date + '\'' +
+                ", hour='" + this.hour + '\'' +
+                ", mainPollutant='" + this.mainPollutant + '\'' +
+                ", AirQualityIndexUS='" + this.airQualityIndexUS + '\'' +
                 '}';
     }
 }

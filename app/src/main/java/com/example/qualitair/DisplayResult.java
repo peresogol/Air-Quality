@@ -8,12 +8,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DisplayResult extends AppCompatActivity {
 
+    public static final String TAG = "Display:LOG";
     private SQLClient db;
     private Place place;
     private WeatherResult weatherResult;
@@ -28,12 +28,11 @@ public class DisplayResult extends AppCompatActivity {
         this.pollutionResult = (PollutionResult) intent.getSerializableExtra("pollution");
         String choice = intent.getStringExtra("choice");
 
-        // a supprimer lorsque l'api fonctionnera
         this.db = new SQLClient(this);
         if (this.db.insertData(place.getCity(), place.getLongitude(), place.getLatitude())) {
-            Log.v("tag", "inseré oui");
+            Log.v(TAG, "" + place.getCity() + getString(R.string.well_inserted_in_bd));
         } else {
-            Log.v("tag", "inséré non");
+            Log.e(TAG, "" + place.getCity() + getString(R.string.error_while_inserting_in_bd));
         }
         if (choice.equals(getResources().getString(R.string.radioButton_Meteo))) {
             this.displayWeather();
@@ -42,13 +41,12 @@ public class DisplayResult extends AppCompatActivity {
         } else if (choice.equals(getResources().getString(R.string.radioButton_MeteoAndPollution))) {
             this.displayWeatherAndPollution();
         } else {
-            Log.e("Error", "Choice from getStringExtra must be Weather one of those from RadioGroup from MainActivity");
+            Log.e(TAG, getString(R.string.error_getStringExtra_DisplaResult));
         }
     }
 
     private void displayWeatherAndPollution() {
         setContentView(R.layout.activity_display_result_weather_and_pollution);
-
     }
 
     private void displayPollution() {
@@ -60,7 +58,7 @@ public class DisplayResult extends AppCompatActivity {
         date.setText(this.pollutionResult.getDate());
         hour.setText(this.pollutionResult.getHour());
         pollutant.setText(this.pollutionResult.getMainPollutant());
-        aqi.setText(this.pollutionResult.getAirQualityIndexUS() + " (AQI US)");
+        aqi.setText(String.format("%s (AQI US)", this.pollutionResult.getAirQualityIndexUS()));
     }
 
     private void displayWeather() {
@@ -99,10 +97,10 @@ public class DisplayResult extends AppCompatActivity {
                 this.db.updateData(this.place.getPlaceName(),this.place.getLongitude(),this.place.getLatitude(),this.place.getIsFavourite());
                 if (item.isChecked()) {
                     item.setIcon(R.drawable.filled_star);
-                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + " a été rajouté aux favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + getString(R.string.added_to_favourites), Toast.LENGTH_SHORT).show();
                 } else {
                     item.setIcon(R.drawable.empty_star);
-                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + " a été enlevé des favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + getString(R.string.well_deleted_favourites), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.Favourite:

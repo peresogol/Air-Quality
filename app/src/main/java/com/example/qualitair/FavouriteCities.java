@@ -1,14 +1,10 @@
 package com.example.qualitair;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,9 +33,9 @@ public class FavouriteCities extends AppCompatActivity {
                 cb.setChecked(!cb.isChecked());
                 place.setIsFavourite(cb.isChecked());
                 if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
-                    Toast.makeText(FavouriteCities.this, "Erreur en enlevant ce lieu des favoris",Toast.LENGTH_SHORT);
+                    Toast.makeText(FavouriteCities.this, R.string.error_updating_favourites,Toast.LENGTH_SHORT);
                 } else {
-                    Toast.makeText(FavouriteCities.this,"" +place.getPlaceName() + " a été supprimé des favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavouriteCities.this,"" + place.getPlaceName() + getString(R.string.well_deleted_favourites), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -57,10 +53,9 @@ public class FavouriteCities extends AppCompatActivity {
                 boolean isFavourite = (cursor.getInt(4) == 1);
                 Place data = new Place(name,longitude,latitude,isFavourite);
                 this.listData.add(data);
-                // while there is another next result
-            } while (cursor.moveToNext());
+            } while (cursor.moveToNext());  // while there is another next result
         } else {
-            Toast.makeText(this,"Il n'y a pas de valeurs à lire", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_values_to_read, Toast.LENGTH_SHORT).show();
         }
         this.listView = (ListView)findViewById(R.id.listView);
         this.adapter = new PlacesListAdapter(this.listData, this);
