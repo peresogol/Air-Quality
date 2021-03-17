@@ -74,8 +74,6 @@ public class DisplayResult extends AppCompatActivity {
         TextView hour = findViewById(R.id.pollutionHour);
         TextView pollutant = findViewById(R.id.pollutant);
         TextView aqi = findViewById(R.id.pollutionLevel);
-        Log.v("date", this.pollutionResult.getDate());
-        Log.v("obj", pollutant.toString());
         date.setText(this.pollutionResult.getDate());
         hour.setText(this.pollutionResult.getHour());
         pollutant.setText(this.pollutionResult.getMainPollutant());

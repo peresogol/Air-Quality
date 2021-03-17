@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
         <TextView
-            android:text="@string/meteorological_and_pollution_survey"
             android:id="@+id/weatherAndPollution"
-            android:layout_width="364dp"
-            android:layout_height="76dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="581dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="5dp"
+            android:text="Relevé Météorologique et de pollution"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="30sp"
@@ -23,11 +24,10 @@
             android:id="@+id/weatherAndPollutionDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="224dp"
+            android:layout_marginTop="8dp"
             android:textColor="#000000"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/weatherAndPollution" />
 
@@ -35,37 +35,35 @@
             android:id="@+id/weatherAndPollutionHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="224dp"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionDate" />
+            app:layout_constraintTop_toBottomOf="@+id/weatherAndPollution" />
 
         <androidx.gridlayout.widget.GridLayout
-            android:layout_width="313dp"
-            android:layout_height="329dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_width="308dp"
+            android:layout_height="167dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="4dp"
             app:columnCount="2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/gridLayout"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionHour"
-            app:layout_constraintVertical_bias="0.741"
-            app:rowCount="7">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.87"
+            app:rowCount="4">
 
                 <TextView
                     android:id="@+id/weatherAndPollutionTxtView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
+                    android:text="Température"
                     android:textColor="#000000"
                     android:textSize="18sp"
-                    android:text="@string/temperature"
                     app:layout_column="0"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.711"
@@ -79,9 +77,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22dp"
+                    android:text="Pression"
                     android:textColor="#000000"
                     android:textSize="18sp"
-                    android:text="@string/pressure"
                     app:layout_column="0"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.713"
@@ -95,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22dp"
-                    android:text="@string/humidity"
+                    android:text="Humidité"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     app:layout_column="0"
@@ -111,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22dp"
-                    android:text="@string/wind_speed"
+                    android:text="Vitesse du vent"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     app:layout_column="0"
@@ -122,55 +120,6 @@
                     app:layout_gravity="fill_horizontal"
                     app:layout_row="3" />
 
-                <TextView
-                    android:id="@+id/weatherAndPollutionTxtView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:text="@string/wind_direction"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    app:layout_column="0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.713"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionWindSpeed"
-                    app:layout_gravity="fill_horizontal"
-                    app:layout_row="4" />
-
-                <TextView
-                    android:id="@+id/weatherAndPollutionTxtView6"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="38dp"
-                    android:text="@string/pollution_index"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    app:layout_column="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pollutionLevel"
-                    app:layout_constraintVertical_bias="0.131"
-                    app:layout_gravity="fill_horizontal"
-                    app:layout_row="5" />
-
-                <TextView
-                    android:id="@+id/weatherAndPollutionTxtView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:text="@string/main_pollutant"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    app:layout_column="0"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pollutionHour"
-                    app:layout_gravity="fill_horizontal"
-                    app:layout_row="6" />
 
                 <TextView
                     android:id="@+id/weatherAndPollutionTemp"
@@ -228,11 +177,77 @@
                     app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionHumidity"
                     app:layout_row="3" />
 
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="313dp"
+            android:layout_height="169dp"
+            android:layout_marginEnd="8dp"
+            app:columnCount="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.855"
+            app:rowCount="3">
+
+                <TextView
+                    android:id="@+id/weatherAndPollutionTxtView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="68dp"
+                    android:text="Force du vent"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_column="0"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.713"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionWindSpeed"
+                    app:layout_gravity="fill_horizontal"
+                    app:layout_row="0" />
+
+                <TextView
+                    android:id="@+id/weatherAndPollutionTxtView6"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="Indice de pollution (AQI US)"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_column="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pollutionLevel"
+                    app:layout_constraintVertical_bias="0.131"
+                    app:layout_gravity="fill_horizontal"
+                    app:layout_row="1" />
+
+                <TextView
+                    android:id="@+id/weatherAndPollutionTxtView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:text="Principal polluant"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_column="0"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pollutionHour"
+                    app:layout_gravity="fill_horizontal"
+                    app:layout_row="2" />
+
                 <TextView
                     android:id="@+id/weatherAndPollutionWindDirection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="0dp"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     app:layout_column="1"
@@ -240,13 +255,13 @@
                     app:layout_constraintHorizontal_bias="0.713"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionWindSpeed"
-                    app:layout_row="4" />
+                    app:layout_row="0" />
 
                 <TextView
                     android:id="@+id/weatherAndPollutionLevel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="38dp"
+                    android:layout_marginTop="0dp"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     app:layout_column="1"
@@ -254,7 +269,7 @@
                     app:layout_constraintHorizontal_bias="0.713"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionHumidity"
-                    app:layout_row="5" />
+                    app:layout_row="1" />
 
                 <TextView
                     android:id="@+id/weatherAndPollutionMainPollutant"
@@ -268,8 +283,9 @@
                     app:layout_constraintHorizontal_bias="0.713"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/weatherAndPollutionWindSpeed"
-                    app:layout_row="6" />
+                    app:layout_row="2" />
 
         </androidx.gridlayout.widget.GridLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
