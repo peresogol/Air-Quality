@@ -15,19 +15,26 @@ public class DisplayResult extends AppCompatActivity {
 
     private SQLClient db;
     private Place place;
+    private WeatherResult weatherResult;
+    private PollutionResult pollutionResult;
+    private Place placeResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        place = (Place) intent.getSerializableExtra("place");
+        weatherResult = (WeatherResult) intent.getSerializableExtra("weather");
+        pollutionResult = (PollutionResult) intent.getSerializableExtra("pollution");
+        String choice = intent.getStringExtra("choice");
 
         // a supprimer lorsque l'api fonctionnera
         this.db = new SQLClient(this);
-        if (this.db.insertData("Toulouse", "123567", "976")) {
+        if (this.db.insertData(place.getCity(), place.getLongitude(), place.getLatitude())) {
             Log.v("tag", "inseré oui");
         } else {
             Log.v("tag", "inséré non");
         }
-        String choice = this.getIntent().getStringExtra("choice");
         if (choice.equals(getResources().getString(R.string.radioButton_Meteo))) {
             setContentView(R.layout.activity_display_result_weather);
         } else if (choice.equals(getResources().getString(R.string.radioButton_Pollution))) {

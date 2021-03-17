@@ -90,4 +90,17 @@ public class Place implements Serializable {
     public String toString() {
         return '(' + this.longitude + " , " + this.latitude + ')';
     }
+
+
+    public String afficher() {
+        return "Place{" +
+                "city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", placeName='" + placeName + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", isFavourite=" + isFavourite +
+                '}';
+    }
 }
