@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -23,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private WeatherResult weatherResult;
     private PollutionResult pollutionResult;
     private Place placeResult;
-    private  TextView nearestCity;
+    private TextView nearestCity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.nearestCity = (TextView) findViewById(R.id.villeGeolocalisation);
+        this.nearestCity = (TextView) findViewById(R.id.villeGeolocalisation);
         Button geoLoc = (Button) findViewById(R.id.boutonGeolocalisation);
         geoLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 if (radioButton_id != -1) {
                     RadioButton radioButton_Choices = (RadioButton) findViewById(radioButton_id);
                     Intent intent = new Intent(MainActivity.this, DisplayResult.class);
-                    intent.putExtra("choice", radioButton_id);
-                    Log.v("ahoe", String.valueOf(radioButton_id));
+                    intent.putExtra("choice", radioButton_Choices.getText());
                     intent.putExtra("place", placeResult);
                     intent.putExtra("weather", weatherResult);
                     intent.putExtra("pollution", pollutionResult);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             this.weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
             this.pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
             this.placeResult = (Place) data.getExtras().getSerializable("place");
-            //this.nearestCity.setText("zxaxazx");
+            this.nearestCity.setText(this.placeResult.getCity());
             Log.v("raoue", weatherResult.toString());
             Log.v("raoue", pollutionResult.toString());
             Log.v("raoue", placeResult.afficher());

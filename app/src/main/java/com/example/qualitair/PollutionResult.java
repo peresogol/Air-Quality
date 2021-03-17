@@ -9,9 +9,9 @@ public class PollutionResult implements Serializable {
     private String mainPollutant;
     private String AirQualityIndexUS;
 
-    public PollutionResult(String date, String hour, String mainPollutant, String airQualityIndexUS) {
-        this.date = date;
+    public PollutionResult(String hour, String date, String mainPollutant, String airQualityIndexUS) {
         this.hour = hour;
+        this.date = date;
         this.mainPollutant = mainPollutant;
         AirQualityIndexUS = airQualityIndexUS;
     }

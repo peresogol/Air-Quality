@@ -39,8 +39,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CallAPI extends AppCompatActivity {
 
     private static final String key = "fb2d9bd0-77c5-458e-b830-fac56be1ec93";
-    private String longitude;
-    private String latitude;
+    private String longitude;// = "33.33";
+    private String latitude;// = "44.44";
     //  private static final String BASE_URL = "http://api.airvisual.com/v2/nearest_city?lat=" + lattitude + "&lon="+ longitude +"&key=fb2d9bd0-77c5-458e-b830-fac56be1ec93";
 
     // URL de base de l'API (doit se terminer par /)
@@ -54,20 +54,21 @@ public class CallAPI extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
 
 
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_api);
 
         // Init fuse location provider
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        // Check permission
-        if (ActivityCompat.checkSelfPermission(CallAPI.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getLocation();
-        } else {
-            ActivityCompat.requestPermissions(CallAPI.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-        }
+        this.fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Construction d'une instance de retrofit (Etape #2 du cours)
         this.retrofit = new Retrofit.Builder()
@@ -77,12 +78,10 @@ public class CallAPI extends AppCompatActivity {
 
         this.serviceAPI = retrofit.create(AirVisualAPI.class);
 
-        // Construit le traitement lorsque l'on clique sur le bouton appel
-       /* Button boutonFiche = (Button) findViewById(R.id.idButtonFiche);
-        boutonFiche.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {*/
-                // appel méthode getResult de l'interface AirVisualAPI
+        // Call GPS
+        this.getLocation();
+
+        // appel méthode getResult de l'interface AirVisualAPI
         Call<JsonElement> appel = serviceAPI.getResult(CallAPI.this.latitude, CallAPI.this.longitude, "fb2d9bd0-77c5-458e-b830-fac56be1ec93");
         appel.enqueue(new Callback<JsonElement>() {
             @Override
@@ -99,14 +98,14 @@ public class CallAPI extends AppCompatActivity {
                     JsonObject location = data.getAsJsonObject("location");
                     JsonArray coordinates = location.getAsJsonArray("coordinates");
 
-                   // Create Place (location) class
+                    // Create Place (location) class
                     Place placeResult = new Place(
-                            data.get("city").toString(),
-                            data.get("state").toString(),
-                            data.get("country").toString(),
-                            data.get("city").toString(),
-                            coordinates.get(0).toString(),
-                            coordinates.get(1).toString(),
+                            data.get("city").getAsString(),
+                            data.get("state").getAsString(),
+                            data.get("country").getAsString(),
+                            data.get("city").getAsString(),
+                            coordinates.get(0).getAsString(),
+                            coordinates.get(1).getAsString(),
                             false
                     );
 
@@ -138,60 +137,77 @@ public class CallAPI extends AppCompatActivity {
                 Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
             //    });
-           // }
+            // }
         });
     }
 
     private PollutionResult getPollutionResult(JsonObject pollution) {
-        String[] timestamp = pollution.get("ts").toString().split("T");
+        String[] timestamp = pollution.get("ts").getAsString().split("T");
         String date = timestamp[0];
-        String hour = timestamp[1].split(":")[0];
+        String hour = timestamp[1].substring(0, 8);
         // Create pollution result class
-        return new PollutionResult (
+        return new PollutionResult(
                 hour,
                 date,
-                pollution.get("mainus").toString(),
-                pollution.get("aqius").toString()
+                pollution.get("mainus").getAsString(),
+                pollution.get("aqius").getAsString()
         );
     }
 
     private WeatherResult getWeatherResult(JsonObject weather) {
-        String[] timestamp = weather.get("ts").toString().split("T");
+        Log.v("input", weather.get("ts").getAsString());
+        String[] timestamp = weather.get("ts").getAsString().split("T");
         String date = timestamp[0];
-        String hour = timestamp[1].split(":")[0];
+        Log.v("in", timestamp[1]);
+        String hour = timestamp[1].substring(0, 8);
+        Log.v("hour", hour);
         // Create meteo result class
         return new WeatherResult(
                 hour,
                 date,
-                weather.get("ic").toString(),
-                weather.get("tp").toString(),
-                weather.get("pr").toString(),
-                weather.get("hu").toString(),
-                weather.get("ws").toString(),
-                weather.get("wd").toString()
+                weather.get("ic").getAsString(),
+                weather.get("tp").getAsString(),
+                weather.get("pr").getAsString(),
+                weather.get("hu").getAsString(),
+                weather.get("ws").getAsString(),
+                weather.get("wd").getAsString()
         );
     }
 
-    @SuppressLint("MissingPermission")
+
     private void getLocation() {
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+        Log.v("oaa", "check0");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        this.fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
+                Log.v("oaa", "check1");
                 // Init location
                 Location location = task.getResult();
                 if (location != null) {
+                    Log.v("oaa", "check2");
                     try {
+                        Log.v("oaa", "check3");
+
                         // Init geoCoder
                         Geocoder geoCoder = new Geocoder(CallAPI.this, Locale.getDefault());
 
                         //Init adresse list
-                        List<Address> adress = geoCoder.getFromLocation(
-                                location.getLatitude(), location.getLongitude(), 1);
+                        List<Address> adress = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
                         // Set latitude and longitude in attribute
                         CallAPI.this.longitude = String.valueOf(adress.get(0).getLongitude());
                         CallAPI.this.latitude = String.valueOf(adress.get(0).getLatitude());
-
+                        Log.v("oaa", String.valueOf(adress.get(0).getLongitude()));
                         Log.v("azyla", adress.toString());
                     } catch (IOException e) {
                         e.printStackTrace();
