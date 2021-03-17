@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.nearestCity = (TextView) findViewById(R.id.villeGeolocalisation);
+        this.nearestCity = (TextView) findViewById(R.id.villeGeolocalisation);
         Button geoLoc = (Button) findViewById(R.id.boutonGeolocalisation);
         geoLoc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                     RadioButton radioButton_Choices = (RadioButton) findViewById(radioButton_id);
                     Intent intent = new Intent(MainActivity.this, DisplayResult.class);
                     intent.putExtra("choice", radioButton_Choices.getText());
-                    Log.v("ahoe", String.valueOf(radioButton_id));
                     intent.putExtra("place", placeResult);
                     intent.putExtra("weather", weatherResult);
                     intent.putExtra("pollution", pollutionResult);
@@ -67,10 +66,7 @@ public class MainActivity extends AppCompatActivity {
             this.weatherResult = (WeatherResult) data.getExtras().getSerializable("weather");
             this.pollutionResult = (PollutionResult) data.getExtras().getSerializable("pollution");
             this.placeResult = (Place) data.getExtras().getSerializable("place");
-            //this.nearestCity.setText("zxaxazx");
-            Log.v("raoue", weatherResult.toString());
-            Log.v("raoue", pollutionResult.toString());
-            Log.v("raoue", placeResult.afficher());
+            this.nearestCity.setText(this.placeResult.getCity());
         }
     }
 

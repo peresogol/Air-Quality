@@ -39,9 +39,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CallAPI extends AppCompatActivity {
 
     private static final String key = "fb2d9bd0-77c5-458e-b830-fac56be1ec93";
-    private String longitude;// = "33.33";
-    private String latitude;// = "44.44";
-    //  private static final String BASE_URL = "http://api.airvisual.com/v2/nearest_city?lat=" + lattitude + "&lon="+ longitude +"&key=fb2d9bd0-77c5-458e-b830-fac56be1ec93";
+    private String longitude;
+    private String latitude;
 
     // URL de base de l'API (doit se terminer par /)
     private static final String API_BASE_URL = "https://api.airvisual.com/v2/";
@@ -50,17 +49,9 @@ public class CallAPI extends AppCompatActivity {
     Retrofit retrofit;
     AirVisualAPI serviceAPI;
 
-    // Instance necessaire a la recuperation de la localisation
+    // Instance nécessaire a la recuperation de la localisation
     FusedLocationProviderClient fusedLocationProviderClient;
 
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +136,7 @@ public class CallAPI extends AppCompatActivity {
         String[] timestamp = pollution.get("ts").getAsString().split("T");
         String date = timestamp[0];
         String hour = timestamp[1].substring(0, 8);
+
         // Create pollution result class
         return new PollutionResult(
                 hour,
@@ -155,12 +147,10 @@ public class CallAPI extends AppCompatActivity {
     }
 
     private WeatherResult getWeatherResult(JsonObject weather) {
-        Log.v("input", weather.get("ts").getAsString());
         String[] timestamp = weather.get("ts").getAsString().split("T");
         String date = timestamp[0];
-        Log.v("in", timestamp[1]);
         String hour = timestamp[1].substring(0, 8);
-        Log.v("hour", hour);
+
         // Create meteo result class
         return new WeatherResult(
                 hour,
@@ -176,7 +166,6 @@ public class CallAPI extends AppCompatActivity {
 
 
     private void getLocation() {
-        Log.v("oaa", "check0");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -190,14 +179,10 @@ public class CallAPI extends AppCompatActivity {
         this.fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
-                Log.v("oaa", "check1");
                 // Init location
                 Location location = task.getResult();
                 if (location != null) {
-                    Log.v("oaa", "check2");
                     try {
-                        Log.v("oaa", "check3");
-
                         // Init geoCoder
                         Geocoder geoCoder = new Geocoder(CallAPI.this, Locale.getDefault());
 
@@ -207,8 +192,6 @@ public class CallAPI extends AppCompatActivity {
                         // Set latitude and longitude in attribute
                         CallAPI.this.longitude = String.valueOf(adress.get(0).getLongitude());
                         CallAPI.this.latitude = String.valueOf(adress.get(0).getLatitude());
-                        Log.v("oaa", String.valueOf(adress.get(0).getLongitude()));
-                        Log.v("azyla", adress.toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
