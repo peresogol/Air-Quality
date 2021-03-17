@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DisplayResult extends AppCompatActivity {
 
+    public static final String TAG = "Display:LOG";
     private SQLClient db;
     private Place place;
     private WeatherResult weatherResult;
@@ -26,15 +27,13 @@ public class DisplayResult extends AppCompatActivity {
         this.place = (Place) intent.getSerializableExtra("place");
         this.weatherResult = (WeatherResult) intent.getSerializableExtra("weather");
         this.pollutionResult = (PollutionResult) intent.getSerializableExtra("pollution");
-        Log.v("nok", this.pollutionResult.toString());
         String choice = intent.getStringExtra("choice");
 
-        // a supprimer lorsque l'api fonctionnera
         this.db = new SQLClient(this);
         if (this.db.insertData(place.getCity(), place.getLongitude(), place.getLatitude())) {
-            Log.v("tag", "inseré");
+            Log.v(TAG, "" + place.getCity() + getString(R.string.well_inserted_in_bd));
         } else {
-            Log.v("tag", "non inséré");
+            Log.e(TAG, "" + place.getCity() + getString(R.string.error_while_inserting_in_bd));
         }
         if (choice.equals(getResources().getString(R.string.radioButton_Meteo))) {
             this.displayWeather();
@@ -101,7 +100,6 @@ public class DisplayResult extends AppCompatActivity {
         wd.setText(this.weatherResult.getWindDirection());
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflaterMenu = getMenuInflater();
@@ -120,10 +118,10 @@ public class DisplayResult extends AppCompatActivity {
                 this.db.updateData(this.place.getPlaceName(),this.place.getLongitude(),this.place.getLatitude(),this.place.getIsFavourite());
                 if (item.isChecked()) {
                     item.setIcon(R.drawable.filled_star);
-                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + " a été rajouté aux favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + getString(R.string.added_to_favourites), Toast.LENGTH_SHORT).show();
                 } else {
                     item.setIcon(R.drawable.empty_star);
-                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + " a été enlevé des favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DisplayResult.this,"" + this.place.getPlaceName() + getString(R.string.well_deleted_favourites), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.Favourite:

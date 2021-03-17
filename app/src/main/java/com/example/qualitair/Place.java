@@ -94,13 +94,13 @@ public class Place implements Serializable {
 
     public String afficher() {
         return "Place{" +
-                "city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", country='" + country + '\'' +
-                ", placeName='" + placeName + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", isFavourite=" + isFavourite +
+                "city='" + this.city + '\'' +
+                ", state='" + this.state + '\'' +
+                ", country='" + this.country + '\'' +
+                ", placeName='" + this.placeName + '\'' +
+                ", longitude='" + this.longitude + '\'' +
+                ", latitude='" + this.latitude + '\'' +
+                ", isFavourite=" + this.isFavourite +
                 '}';
     }
 }

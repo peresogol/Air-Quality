@@ -24,4 +24,14 @@
     <string name="cancel">Annuler</string>
     <string name="toast_popup_when_canceled">\"Le nom du lieu reste \"</string>
     <string name="add">Ajouter</string>
+    <string name="well_inserted_in_bd">\" a bien été insérée dans la base de données\"</string>
+    <string name="error_while_inserting_in_bd">\" n\'a pas été insérée dans la base de données\"</string>
+    <string name="added_to_favourites">\" a été rajoutée aux favoris\"</string>
+    <string name="error_updating_favourites">Erreur en enlevant ce lieu des favoris</string>
+    <string name="well_deleted_favourites">\" a été supprimée des favoris\"</string>
+    <string name="no_values_to_read">Il n\'y a pas de valeurs à lire</string>
+    <string name="error_getStringExtra_DisplaResult">Choice de la méthode getStringExtra doit être égal à l\'un des textes des radios boutons du group RadioGroup du mainActivity</string>
+    <string name="pollution_list">Relevé de pollution</string>
+    <string name="main_pollutant">Principal polluant</string>
+    <string name="pollution_index">Indice de pollution (AQI US)</string>
 </resources>
