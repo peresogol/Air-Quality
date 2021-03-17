@@ -31,4 +31,7 @@
     <string name="well_deleted_favourites">\" a été supprimée des favoris\"</string>
     <string name="no_values_to_read">Il n\'y a pas de valeurs à lire</string>
     <string name="error_getStringExtra_DisplaResult">Choice de la méthode getStringExtra doit être égal à l\'un des textes des radios boutons du group RadioGroup du mainActivity</string>
+    <string name="pollution_list">Relevé de pollution</string>
+    <string name="main_pollutant">Principal polluant</string>
+    <string name="pollution_index">Indice de pollution (AQI US)</string>
 </resources>
