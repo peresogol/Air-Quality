@@ -32,7 +32,6 @@ public class History extends AppCompatActivity {
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 AlertDialog.Builder popUp = new AlertDialog.Builder(History.this);
                 popUp.setTitle(R.string.popup_title);
                 popUp.setMessage(R.string.popup_message);
