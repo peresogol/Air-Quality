@@ -26,14 +26,15 @@ public class DisplayResult extends AppCompatActivity {
         this.place = (Place) intent.getSerializableExtra("place");
         this.weatherResult = (WeatherResult) intent.getSerializableExtra("weather");
         this.pollutionResult = (PollutionResult) intent.getSerializableExtra("pollution");
+        Log.v("nok", this.pollutionResult.toString());
         String choice = intent.getStringExtra("choice");
 
         // a supprimer lorsque l'api fonctionnera
         this.db = new SQLClient(this);
         if (this.db.insertData(place.getCity(), place.getLongitude(), place.getLatitude())) {
-            Log.v("tag", "inseré oui");
+            Log.v("tag", "inseré");
         } else {
-            Log.v("tag", "inséré non");
+            Log.v("tag", "non inséré");
         }
         if (choice.equals(getResources().getString(R.string.radioButton_Meteo))) {
             this.displayWeather();
@@ -48,7 +49,24 @@ public class DisplayResult extends AppCompatActivity {
 
     private void displayWeatherAndPollution() {
         setContentView(R.layout.activity_display_result_weather_and_pollution);
-
+        TextView date = findViewById(R.id.weatherAndPollutionDate);
+        TextView hour = findViewById(R.id.weatherAndPollutionHour);
+        TextView temp = findViewById(R.id.weatherAndPollutionTemp);
+        TextView pr = findViewById(R.id.weatherAndPollutionPressure);
+        TextView hu = findViewById(R.id.weatherAndPollutionHumidity);
+        TextView ws = findViewById(R.id.weatherAndPollutionWindSpeed);
+        TextView wd = findViewById(R.id.weatherAndPollutionWindDirection);
+        TextView aqi = findViewById(R.id.weatherAndPollutionLevel);
+        TextView pollutant = findViewById(R.id.weatherAndPollutionMainPollutant);
+        date.setText(this.pollutionResult.getDate());
+        hour.setText(this.pollutionResult.getHour());
+        pollutant.setText(this.pollutionResult.getMainPollutant());
+        aqi.setText(this.pollutionResult.getAirQualityIndexUS());
+        temp.setText(this.weatherResult.getTemperature());
+        pr.setText(this.weatherResult.getPressure());
+        hu.setText(this.weatherResult.getHumidity());
+        ws.setText(this.weatherResult.getWindSpeed());
+        wd.setText(this.weatherResult.getWindDirection());
     }
 
     private void displayPollution() {
@@ -57,10 +75,12 @@ public class DisplayResult extends AppCompatActivity {
         TextView hour = findViewById(R.id.pollutionHour);
         TextView pollutant = findViewById(R.id.pollutant);
         TextView aqi = findViewById(R.id.pollutionLevel);
+        Log.v("date", this.pollutionResult.getDate());
+        Log.v("obj", pollutant.toString());
         date.setText(this.pollutionResult.getDate());
         hour.setText(this.pollutionResult.getHour());
         pollutant.setText(this.pollutionResult.getMainPollutant());
-        aqi.setText(this.pollutionResult.getAirQualityIndexUS() + " (AQI US)");
+        aqi.setText(this.pollutionResult.getAirQualityIndexUS());
     }
 
     private void displayWeather() {
@@ -80,6 +100,7 @@ public class DisplayResult extends AppCompatActivity {
         ws.setText(this.weatherResult.getWindSpeed());
         wd.setText(this.weatherResult.getWindDirection());
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
