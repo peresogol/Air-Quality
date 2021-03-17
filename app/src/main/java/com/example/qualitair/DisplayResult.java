@@ -35,11 +35,11 @@ public class DisplayResult extends AppCompatActivity {
         } else {
             Log.e(TAG, "" + place.getCity() + getString(R.string.error_while_inserting_in_bd));
         }
-        if (choice.equals(getResources().getString(R.string.radioButton_Meteo))) {
+        if (choice.equals(getResources().getString(R.string.radio_button_meteo))) {
             this.displayWeather();
-        } else if (choice.equals(getResources().getString(R.string.radioButton_Pollution))) {
+        } else if (choice.equals(getResources().getString(R.string.radio_button_pollution))) {
             this.displayPollution();
-        } else if (choice.equals(getResources().getString(R.string.radioButton_MeteoAndPollution))) {
+        } else if (choice.equals(getResources().getString(R.string.radio_button_meteo_and_pollution))) {
             this.displayWeatherAndPollution();
         } else {
             Log.e("Error", "Choice from getStringExtra must be Weather one of those from RadioGroup from MainActivity");
@@ -74,8 +74,6 @@ public class DisplayResult extends AppCompatActivity {
         TextView hour = findViewById(R.id.pollutionHour);
         TextView pollutant = findViewById(R.id.pollutant);
         TextView aqi = findViewById(R.id.pollutionLevel);
-        Log.v("date", this.pollutionResult.getDate());
-        Log.v("obj", pollutant.toString());
         date.setText(this.pollutionResult.getDate());
         hour.setText(this.pollutionResult.getHour());
         pollutant.setText(this.pollutionResult.getMainPollutant());
