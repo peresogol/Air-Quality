@@ -42,4 +42,5 @@
     <string name="meteorological_and_pollution_survey">Relevé Météorologique et de pollution</string>
     <string name="api_error">Erreur lors de l\'appel à l\'API :</string>
     <string name="gps_error">Erreur lors de la récupération des coordonnées</string>
+    <string name="warning_no_city_found">Veuillez vous géolocaliser</string>
 </resources>

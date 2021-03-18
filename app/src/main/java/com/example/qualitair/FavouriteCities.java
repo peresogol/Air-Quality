@@ -1,12 +1,17 @@
 package com.example.qualitair;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +33,36 @@ public class FavouriteCities extends AppCompatActivity {
         this.listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
-
+                Place place = (Place) parent.getItemAtPosition(pos);
+                // popup creation
+                AlertDialog.Builder popUp = new AlertDialog.Builder(FavouriteCities.this);
+                popUp.setTitle(R.string.popup_title);
+                popUp.setMessage(R.string.popup_message);
+                final EditText input = new EditText(FavouriteCities.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                input.setLayoutParams(lp);
+                input.setText(place.getPlaceName());
+                popUp.setView(input);
+                popUp.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        place.setPlaceName(input.getText().toString());
+                        if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
+                            Toast.makeText(FavouriteCities.this, R.string.toast_rename_error,Toast.LENGTH_SHORT);
+                        } else {
+                            Toast.makeText(FavouriteCities.this,getString(R.string.toast_rename_ok) + place.getPlaceName(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                popUp.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(FavouriteCities.this,place.getPlaceName() + getString(R.string.toast_popup_when_canceled) + place.getPlaceName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                popUp.show();
                 return true;
             }
         });
@@ -43,7 +77,11 @@ public class FavouriteCities extends AppCompatActivity {
                 if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
                     Toast.makeText(FavouriteCities.this, R.string.error_updating_favourites,Toast.LENGTH_SHORT);
                 } else {
-                    Toast.makeText(FavouriteCities.this,"" + place.getPlaceName() + getString(R.string.well_deleted_favourites), Toast.LENGTH_SHORT).show();
+                    if (cb.isChecked()) {
+                        Toast.makeText(FavouriteCities.this,"" + place.getPlaceName() + getString(R.string.well_deleted_favourites), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(FavouriteCities.this,"" + place.getPlaceName() + getString(R.string.added_to_favourites), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

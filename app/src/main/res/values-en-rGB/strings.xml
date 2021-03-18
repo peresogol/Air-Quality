@@ -42,4 +42,5 @@
     <string name="meteorological_and_pollution_survey">Meteorological and pollution survey</string>
     <string name="api_error">Error occured during API call</string>
     <string name="gps_error">error occurred during coordinate\'s retrieving</string>
+    <string name="warning_no_city_found">Please geolocate yourself</string>
 </resources>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,18 +41,22 @@ public class MainActivity extends AppCompatActivity {
         displayResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RadioGroup radioGroup_Choices = (RadioGroup) findViewById(R.id.radioGroup);
-                int radioButton_id = radioGroup_Choices.getCheckedRadioButtonId();
-                if (radioButton_id != -1) {
-                    RadioButton radioButton_Choices = (RadioButton) findViewById(radioButton_id);
-                    Intent intent = new Intent(MainActivity.this, DisplayResult.class);
-                    intent.putExtra("choice", radioButton_Choices.getText());
-                    intent.putExtra("place", placeResult);
-                    intent.putExtra("weather", weatherResult);
-                    intent.putExtra("pollution", pollutionResult);
-                    startActivity(intent);
+                if(placeResult != null) {
+                    RadioGroup radioGroup_Choices = (RadioGroup) findViewById(R.id.radioGroup);
+                    int radioButton_id = radioGroup_Choices.getCheckedRadioButtonId();
+                    if (radioButton_id != -1) {
+                        RadioButton radioButton_Choices = (RadioButton) findViewById(radioButton_id);
+                        Intent intent = new Intent(MainActivity.this, DisplayResult.class);
+                        intent.putExtra("choice", radioButton_Choices.getText());
+                        intent.putExtra("place", placeResult);
+                        intent.putExtra("weather", weatherResult);
+                        intent.putExtra("pollution", pollutionResult);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MainActivity.this, R.string.warning_no_radio_selection, Toast.LENGTH_LONG).show();
+                    }
                 } else {
-                    Toast.makeText(MainActivity.this, R.string.warning_no_radio_selection, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.warning_no_city_found, Toast.LENGTH_LONG).show();
                 }
             }
         });

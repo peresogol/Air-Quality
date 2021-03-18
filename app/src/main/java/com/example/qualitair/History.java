@@ -32,38 +32,19 @@ public class History extends AppCompatActivity {
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog.Builder popUp = new AlertDialog.Builder(History.this);
-                popUp.setTitle(R.string.popup_title);
-                popUp.setMessage(R.string.popup_message);
-                final EditText input = new EditText(History.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                input.setLayoutParams(lp);
                 Place place = (Place) parent.getItemAtPosition(position);
-                input.setText(place.getPlaceName());
-                popUp.setView(input);
-                popUp.setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
-                        cb.setChecked(!cb.isChecked());
-                        place.setIsFavourite(cb.isChecked());
-                        place.setPlaceName(input.getText().toString());
-                        if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
-                            Toast.makeText(History.this, R.string.toast_rename_error,Toast.LENGTH_SHORT);
-                        } else {
-                            Toast.makeText(History.this,getString(R.string.toast_rename_ok) + place.getPlaceName(), Toast.LENGTH_SHORT).show();
-                        }
+                CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox_Star);
+                cb.setChecked(!cb.isChecked());
+                place.setIsFavourite(cb.isChecked());
+                if (!db.updateData(place.getPlaceName(),place.getLongitude(),place.getLatitude(),place.getIsFavourite())) {
+                    Toast.makeText(History.this, R.string.error_updating_favourites,Toast.LENGTH_SHORT);
+                } else {
+                    if (cb.isChecked()) {
+                        Toast.makeText(History.this,"" + place.getPlaceName() + getString(R.string.well_deleted_favourites), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(History.this,"" + place.getPlaceName() + getString(R.string.added_to_favourites), Toast.LENGTH_SHORT).show();
                     }
-                });
-                popUp.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(History.this,getString(R.string.toast_popup_when_canceled) + place.getPlaceName(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                popUp.show();
+                }
             }
         });
     }

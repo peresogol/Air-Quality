@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ public class CallAPI extends AppCompatActivity {
 
     private static final String key = "fb2d9bd0-77c5-458e-b830-fac56be1ec93";
     private String longitude;
-    private String latitude = "0";
+    private String latitude;
 
     // URL de base de l'API (doit se terminer par /)
     private static final String API_BASE_URL = "https://api.airvisual.com/v2/";
@@ -71,8 +70,8 @@ public class CallAPI extends AppCompatActivity {
 
     // appel méthode getResult de l'interface AirVisualAPI
     private void ApiRequest(double lat, double lon) {
-        Log.v("api", this.latitude + "5");
-        Log.v("api", this.longitude + "5");
+        Log.v("api", this.latitude + " ");
+        Log.v("api", this.longitude + " ");
         Call<JsonElement> appel = serviceAPI.getResult(Double.toString(lat), Double.toString(lon), this.key);
         appel.enqueue(new Callback<JsonElement>() {
             @Override
