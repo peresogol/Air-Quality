@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private Place placeResult;
     private TextView nearestCity;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
