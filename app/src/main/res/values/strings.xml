@@ -34,10 +34,12 @@
     <string name="main_pollutant">Principal polluant</string>
     <string name="pollution_index">Indice de pollution (AQI US)</string>
     <string name="meteorological_survey">Relevé Météorologique</string>
-    <string name="temperature">Temperature</string>
+    <string name="temperature">Température</string>
     <string name="pressure">Pression</string>
     <string name="humidity">Humidité</string>
     <string name="wind_speed">Vitesse du vent</string>
     <string name="wind_direction">Direction du vent</string>
     <string name="meteorological_and_pollution_survey">Relevé Météorologique et de pollution</string>
+    <string name="api_error">Erreur lors de l\'appel à l\'API :</string>
+    <string name="gps_error">Erreur lors de la récupération des coordonnées</string>
 </resources>

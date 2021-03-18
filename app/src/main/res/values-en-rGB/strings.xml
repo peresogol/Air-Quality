@@ -21,7 +21,7 @@
     <string name="toast_rename_error">Error while renaming this place</string>
     <string name="toast_rename_ok">\"Place name has been replaced by \"</string>
     <string name="cancel">Cancel</string>
-    <string name="toast_popup_when_canceled">\"Place name stay \"</string>
+    <string name="toast_popup_when_canceled">\"Place name remains \"</string>
     <string name="add">Add</string>
     <string name="well_inserted_in_bd">\" has been inserted in database\"</string>
     <string name="error_while_inserting_in_bd">\" hasn\'t been inserted in database\"</string>
@@ -40,4 +40,6 @@
     <string name="wind_speed">Wind speed</string>
     <string name="wind_direction">Wind direction</string>
     <string name="meteorological_and_pollution_survey">Meteorological and pollution survey</string>
+    <string name="api_error">Error occured during API call</string>
+    <string name="gps_error">error occurred during coordinate\'s retrieving</string>
 </resources>

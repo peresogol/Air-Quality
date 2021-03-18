@@ -1,16 +1,13 @@
 package com.example.qualitair;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,10 +22,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +33,7 @@ public class CallAPI extends AppCompatActivity {
 
     private static final String key = "fb2d9bd0-77c5-458e-b830-fac56be1ec93";
     private String longitude;
-    private String latitude;
+    private String latitude = "0";
 
     // URL de base de l'API (doit se terminer par /)
     private static final String API_BASE_URL = "https://api.airvisual.com/v2/";
@@ -51,7 +44,6 @@ public class CallAPI extends AppCompatActivity {
 
     // Instance nécessaire a la recuperation de la localisation
     FusedLocationProviderClient fusedLocationProviderClient;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +61,19 @@ public class CallAPI extends AppCompatActivity {
 
         this.serviceAPI = retrofit.create(AirVisualAPI.class);
 
-        // Call GPS
-        this.getLocation();
+        // Call GPS and permission check
+        if (ActivityCompat.checkSelfPermission(CallAPI.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            this.getLocation();
+        } else {
+            ActivityCompat.requestPermissions(CallAPI.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+        }
+    }
 
-        // appel méthode getResult de l'interface AirVisualAPI
-        Call<JsonElement> appel = serviceAPI.getResult(CallAPI.this.latitude, CallAPI.this.longitude, "fb2d9bd0-77c5-458e-b830-fac56be1ec93");
+    // appel méthode getResult de l'interface AirVisualAPI
+    private void ApiRequest(double lat, double lon) {
+        Log.v("api", this.latitude + "5");
+        Log.v("api", this.longitude + "5");
+        Call<JsonElement> appel = serviceAPI.getResult(Double.toString(lat), Double.toString(lon), this.key);
         appel.enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
@@ -119,18 +119,17 @@ public class CallAPI extends AppCompatActivity {
                     setResult(Activity.RESULT_OK, intentRetour);
                     finish();
                 } else {
-                    Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + response.errorBody(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CallAPI.this, getString(R.string.api_error) + response.errorBody(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
-                Toast.makeText(CallAPI.this, "Erreur lors de l'appel à l'API :" + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(CallAPI.this, getString(R.string.api_error) + t.getMessage(), Toast.LENGTH_LONG).show();
             }
-            //    });
-            // }
         });
     }
+
 
     private PollutionResult getPollutionResult(JsonObject pollution) {
         String[] timestamp = pollution.get("ts").getAsString().split("T");
@@ -182,20 +181,10 @@ public class CallAPI extends AppCompatActivity {
                 // Init location
                 Location location = task.getResult();
                 if (location != null) {
-                    try {
-                        // Init geoCoder
-                        Geocoder geoCoder = new Geocoder(CallAPI.this, Locale.getDefault());
-
-                        //Init adresse list
-                        List<Address> adress = geoCoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                        // Set latitude and longitude in attribute
-                        CallAPI.this.longitude = String.valueOf(adress.get(0).getLongitude());
-                        CallAPI.this.latitude = String.valueOf(adress.get(0).getLatitude());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
+                    CallAPI.this.ApiRequest(location.getLatitude(), location.getLongitude());
+                } else {
+                    Toast.makeText(CallAPI.this, getString(R.string.gps_error), Toast.LENGTH_LONG).show();
+                    CallAPI.this.finish();
                 }
             }
         });
