@@ -25,6 +25,14 @@ public class FavouriteCities extends AppCompatActivity {
         this.db = new SQLClient(this);
         this.viewFavourites();
 
+        this.listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id) {
+
+                return true;
+            }
+        });
+
         this.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

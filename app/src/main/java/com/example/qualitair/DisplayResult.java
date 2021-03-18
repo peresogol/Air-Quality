@@ -112,7 +112,7 @@ public class DisplayResult extends AppCompatActivity {
             case R.id.setFavourite:
                 // ajouter code afin d'insérer le fait que cette ville soit favorite dans la base de données
                 item.setChecked(!item.isChecked());
-                this.place.setIsFavourite(!item.isChecked());
+                this.place.setIsFavourite(item.isChecked());
                 this.db.updateData(this.place.getPlaceName(),this.place.getLongitude(),this.place.getLatitude(),this.place.getIsFavourite());
                 if (item.isChecked()) {
                     item.setIcon(R.drawable.filled_star);
